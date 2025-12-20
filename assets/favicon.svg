@@ -1,0 +1,41 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Premium Dark Gradient Background -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0a;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#16213e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a0a0a;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Letter D Gradient - Subtle light effect -->
+    <linearGradient id="letterGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.95" />
+      <stop offset="50%" style="stop-color:#e8e8ed;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#d2d2d7;stop-opacity:0.85" />
+    </linearGradient>
+
+    <!-- Subtle shine overlay -->
+    <linearGradient id="shineGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.1" />
+      <stop offset="50%" style="stop-color:#ffffff;stop-opacity:0.02" />
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0" />
+    </linearGradient>
+  </defs>
+
+  <!-- Rounded square background with dark gradient -->
+  <rect width="512" height="512" rx="90" ry="90" fill="url(#bgGradient)"/>
+
+  <!-- Subtle shine overlay -->
+  <rect width="512" height="512" rx="90" ry="90" fill="url(#shineGradient)"/>
+
+  <!-- Letter D - Bold, Modern, Centered -->
+  <text
+    x="256"
+    y="380"
+    font-family="SF Pro Display, -apple-system, BlinkMacSystemFont, Helvetica Neue, Arial, sans-serif"
+    font-size="340"
+    font-weight="700"
+    fill="url(#letterGradient)"
+    text-anchor="middle"
+    letter-spacing="-10">D</text>
+</svg>

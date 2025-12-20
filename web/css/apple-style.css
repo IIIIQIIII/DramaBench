@@ -1,0 +1,524 @@
+/**
+ * Apple-Style CSS Framework for DramaBench
+ * Inspired by Apple's design language: clean, minimal, elegant
+ */
+
+/* ============================================
+   Root Variables (Apple Design Tokens)
+   ============================================ */
+:root {
+  /* Colors - Apple Style */
+  --apple-white: #ffffff;
+  --apple-black: #1d1d1f;
+  --apple-gray-1: #f5f5f7;
+  --apple-gray-2: #e8e8ed;
+  --apple-gray-3: #d2d2d7;
+  --apple-gray-4: #86868b;
+  --apple-gray-5: #6e6e73;
+  --apple-gray-6: #515154;
+
+  /* Apple Blue */
+  --apple-blue: #0071e3;
+  --apple-blue-hover: #0077ed;
+  --apple-blue-dark: #0051a8;
+
+  /* Apple Green (Success) */
+  --apple-green: #30d158;
+
+  /* Apple Orange (Warning) */
+  --apple-orange: #ff9500;
+
+  /* Apple Red (Error) */
+  --apple-red: #ff3b30;
+
+  /* Spacing */
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 32px;
+  --spacing-xl: 48px;
+  --spacing-2xl: 64px;
+  --spacing-3xl: 96px;
+
+  /* Typography */
+  --font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-base: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 21px;
+  --font-size-2xl: 28px;
+  --font-size-3xl: 40px;
+  --font-size-4xl: 56px;
+  --font-size-5xl: 80px;
+
+  /* Borders & Radius */
+  --border-radius-sm: 8px;
+  --border-radius-md: 12px;
+  --border-radius-lg: 18px;
+  --border-radius-xl: 24px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.16);
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+/* ============================================
+   Global Styles
+   ============================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  color: var(--apple-black);
+  background-color: var(--apple-gray-1);
+}
+
+/* ============================================
+   Typography
+   ============================================ */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: var(--font-size-5xl);
+  font-weight: 700;
+}
+
+h2 {
+  font-size: var(--font-size-4xl);
+  font-weight: 700;
+}
+
+h3 {
+  font-size: var(--font-size-3xl);
+}
+
+h4 {
+  font-size: var(--font-size-2xl);
+}
+
+h5 {
+  font-size: var(--font-size-xl);
+}
+
+h6 {
+  font-size: var(--font-size-lg);
+}
+
+p {
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  color: var(--apple-gray-5);
+}
+
+a {
+  color: var(--apple-blue);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--apple-blue-hover);
+}
+
+/* ============================================
+   Navigation Bar (Apple Style)
+   ============================================ */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--apple-gray-2);
+}
+
+.navbar-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-sm) var(--spacing-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-logo {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--apple-black);
+  letter-spacing: -0.02em;
+}
+
+.navbar-links {
+  display: flex;
+  gap: var(--spacing-md);
+  list-style: none;
+}
+
+.navbar-links a {
+  color: var(--apple-gray-5);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  transition: color var(--transition-fast);
+}
+
+.navbar-links a:hover {
+  color: var(--apple-black);
+}
+
+/* ============================================
+   Hero Section
+   ============================================ */
+.hero {
+  text-align: center;
+  padding: var(--spacing-3xl) var(--spacing-md);
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.hero h1 {
+  margin-bottom: var(--spacing-sm);
+}
+
+.hero p {
+  font-size: var(--font-size-xl);
+  color: var(--apple-gray-5);
+  max-width: 800px;
+  margin: 0 auto var(--spacing-lg);
+}
+
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-xl);
+  flex-wrap: wrap;
+  margin-top: var(--spacing-lg);
+}
+
+.hero-stat {
+  text-align: center;
+}
+
+.hero-stat-value {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  color: var(--apple-blue);
+  display: block;
+}
+
+.hero-stat-label {
+  font-size: var(--font-size-sm);
+  color: var(--apple-gray-5);
+  margin-top: var(--spacing-xs);
+}
+
+/* ============================================
+   Buttons (Apple Style)
+   ============================================ */
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  text-align: center;
+  border-radius: var(--border-radius-xl);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  border: none;
+  font-family: var(--font-family);
+}
+
+.btn-primary {
+  background-color: var(--apple-blue);
+  color: var(--apple-white) !important;
+}
+
+.btn-primary:hover {
+  background-color: var(--apple-blue-hover);
+  color: var(--apple-white) !important;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--apple-blue);
+  border: 2px solid var(--apple-blue);
+}
+
+.btn-secondary:hover {
+  background-color: var(--apple-blue);
+  color: var(--apple-white);
+}
+
+/* ============================================
+   Cards
+   ============================================ */
+.card {
+  background: var(--apple-white);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+}
+
+.card-title {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  margin-bottom: var(--spacing-sm);
+  color: var(--apple-black);
+}
+
+.card-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--apple-gray-4);
+  margin-bottom: var(--spacing-md);
+}
+
+.card-content {
+  font-size: var(--font-size-base);
+  color: var(--apple-gray-5);
+}
+
+/* ============================================
+   Grid System
+   ============================================ */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-md);
+}
+
+.container-fluid {
+  width: 100%;
+  padding: var(--spacing-md);
+}
+
+.grid {
+  display: grid;
+  gap: var(--spacing-md);
+}
+
+.grid-2 {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.grid-3 {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.grid-4 {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+/* ============================================
+   Section Styles
+   ============================================ */
+section {
+  padding: var(--spacing-2xl) 0;
+}
+
+.section-title {
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: var(--spacing-md);
+  color: var(--apple-black);
+}
+
+.section-subtitle {
+  font-size: var(--font-size-lg);
+  text-align: center;
+  color: var(--apple-gray-5);
+  max-width: 600px;
+  margin: 0 auto var(--spacing-xl);
+}
+
+/* ============================================
+   Table Styles (Apple Style)
+   ============================================ */
+.table-container {
+  overflow-x: auto;
+  background: var(--apple-white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background-color: var(--apple-gray-1);
+}
+
+th {
+  padding: var(--spacing-sm);
+  text-align: left;
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+  color: var(--apple-gray-5);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+td {
+  padding: var(--spacing-sm);
+  border-top: 1px solid var(--apple-gray-2);
+  font-size: var(--font-size-base);
+  color: var(--apple-black);
+}
+
+tr:hover {
+  background-color: var(--apple-gray-1);
+}
+
+/* ============================================
+   Badge/Tag Styles
+   ============================================ */
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: var(--border-radius-xl);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badge-blue {
+  background-color: rgba(0, 113, 227, 0.1);
+  color: var(--apple-blue);
+}
+
+.badge-green {
+  background-color: rgba(48, 209, 88, 0.1);
+  color: var(--apple-green);
+}
+
+.badge-orange {
+  background-color: rgba(255, 149, 0, 0.1);
+  color: var(--apple-orange);
+}
+
+.badge-red {
+  background-color: rgba(255, 59, 48, 0.1);
+  color: var(--apple-red);
+}
+
+.badge-gray {
+  background-color: var(--apple-gray-2);
+  color: var(--apple-gray-5);
+}
+
+/* ============================================
+   Footer
+   ============================================ */
+.footer {
+  background-color: var(--apple-gray-1);
+  padding: var(--spacing-xl) var(--spacing-md);
+  text-align: center;
+  border-top: 1px solid var(--apple-gray-2);
+}
+
+.footer p {
+  font-size: var(--font-size-sm);
+  color: var(--apple-gray-5);
+}
+
+/* ============================================
+   Utility Classes
+   ============================================ */
+.text-center {
+  text-align: center;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: var(--spacing-xs); }
+.mt-2 { margin-top: var(--spacing-sm); }
+.mt-3 { margin-top: var(--spacing-md); }
+.mt-4 { margin-top: var(--spacing-lg); }
+.mt-5 { margin-top: var(--spacing-xl); }
+
+.mb-0 { margin-bottom: 0; }
+.mb-1 { margin-bottom: var(--spacing-xs); }
+.mb-2 { margin-bottom: var(--spacing-sm); }
+.mb-3 { margin-bottom: var(--spacing-md); }
+.mb-4 { margin-bottom: var(--spacing-lg); }
+.mb-5 { margin-bottom: var(--spacing-xl); }
+
+.p-0 { padding: 0; }
+.p-1 { padding: var(--spacing-xs); }
+.p-2 { padding: var(--spacing-sm); }
+.p-3 { padding: var(--spacing-md); }
+.p-4 { padding: var(--spacing-lg); }
+.p-5 { padding: var(--spacing-xl); }
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+@media (max-width: 768px) {
+  h1 {
+    font-size: var(--font-size-3xl);
+  }
+
+  h2 {
+    font-size: var(--font-size-2xl);
+  }
+
+  .hero {
+    padding: var(--spacing-xl) var(--spacing-md);
+  }
+
+  .hero p {
+    font-size: var(--font-size-base);
+  }
+
+  .navbar-content {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .hero-stats {
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+}

@@ -1,0 +1,507 @@
+{
+  "last_updated": "2025-12-20",
+  "total_scripts": 1103,
+  "total_evaluations": 8824,
+  "models_evaluated": 8,
+  "dimensions": 6,
+  "overall_rankings": [
+    {
+      "model": "GPT-5.2",
+      "model_id": "gpt-5.2",
+      "avg_score": 0.9603985811187224,
+      "dimension_scores": {
+        "Format Standards": 0.0,
+        "Narrative Efficiency": 0.9807631912964642,
+        "Character Consistency": 0.006279221461719335,
+        "Emotional Depth": 2.9120580235720763,
+        "Logic Consistency": 0.02013601865043388,
+        "Conflict Handling": 1.843155031731641
+      },
+      "rank": 1
+    },
+    {
+      "model": "GLM-4.6",
+      "model_id": "glm-4.6",
+      "avg_score": 0.9304054315068041,
+      "dimension_scores": {
+        "Format Standards": 0.0,
+        "Narrative Efficiency": 0.9237613780598368,
+        "Character Consistency": 0.010893272026621471,
+        "Emotional Depth": 2.766999093381686,
+        "Logic Consistency": 0.044876760350559076,
+        "Conflict Handling": 1.8359020852221215
+      },
+      "rank": 2
+    },
+    {
+      "model": "Qwen3-Max",
+      "model_id": "qwen3-max",
+      "avg_score": 0.9172520167500894,
+      "dimension_scores": {
+        "Format Standards": 0.0,
+        "Narrative Efficiency": 0.9290598683442424,
+        "Character Consistency": 0.007482360665842529,
+        "Emotional Depth": 2.700815956482321,
+        "Logic Consistency": 0.049290814373497964,
+        "Conflict Handling": 1.8168631006346327
+      },
+      "rank": 3
+    },
+    {
+      "model": "Kimi K2 Thinking",
+      "model_id": "kimi-k2-thinking",
+      "avg_score": 0.916530722036212,
+      "dimension_scores": {
+        "Format Standards": 0.0,
+        "Narrative Efficiency": 0.9316580235720762,
+        "Character Consistency": 0.009931644741556202,
+        "Emotional Depth": 2.7515865820489576,
+        "Logic Consistency": 0.03447589690454604,
+        "Conflict Handling": 1.771532184950136
+      },
+      "rank": 4
+    },
+    {
+      "model": "DeepSeek V3.2",
+      "model_id": "deepseek-v3.2",
+      "avg_score": 0.9099332871238457,
+      "dimension_scores": {
+        "Format Standards": 0.0,
+        "Narrative Efficiency": 0.9141833182230281,
+        "Character Consistency": 0.009021270038329707,
+        "Emotional Depth": 2.7026291931097006,
+        "Logic Consistency": 0.023249168933212452,
+        "Conflict Handling": 1.8105167724388032
+      },
+      "rank": 5
+    },
+    {
+      "model": "Claude Opus 4.5",
+      "model_id": "claude-opus-4.5",
+      "avg_score": 0.8670072786881228,
+      "dimension_scores": {
+        "Format Standards": 0.0,
+        "Narrative Efficiency": 0.929626291931097,
+        "Character Consistency": 0.011843728252727462,
+        "Emotional Depth": 2.4342701722574795,
+        "Logic Consistency": 0.024852890385528643,
+        "Conflict Handling": 1.801450589301904
+      },
+      "rank": 6
+    },
+    {
+      "model": "gemini-3-pro-preview",
+      "model_id": "gemini-3-pro-preview",
+      "avg_score": 0.8389817165284956,
+      "dimension_scores": {
+        "Format Standards": 0.0,
+        "Narrative Efficiency": 0.9376026291931097,
+        "Character Consistency": 0.013501217445809005,
+        "Emotional Depth": 2.1804170444242974,
+        "Logic Consistency": 0.03564230022017873,
+        "Conflict Handling": 1.8667271078875793
+      },
+      "rank": 7
+    },
+    {
+      "model": "MiniMax M2",
+      "model_id": "minimax-m2",
+      "avg_score": 0.8093845402015729,
+      "dimension_scores": {
+        "Format Standards": 0.0,
+        "Narrative Efficiency": 0.9186109700815956,
+        "Character Consistency": 0.009173786993662062,
+        "Emotional Depth": 2.1414324569356302,
+        "Logic Consistency": 0.0572622846781505,
+        "Conflict Handling": 1.729827742520399
+      },
+      "rank": 8
+    }
+  ],
+  "dimension_details": [
+    {
+      "model": "Claude Opus 4.5",
+      "model_id": "claude-opus-4.5",
+      "dimension": "Format Standards",
+      "dimension_id": "format_standards",
+      "score": 0.0,
+      "samples": 1103
+    },
+    {
+      "model": "DeepSeek V3.2",
+      "model_id": "deepseek-v3.2",
+      "dimension": "Format Standards",
+      "dimension_id": "format_standards",
+      "score": 0.0,
+      "samples": 1103
+    },
+    {
+      "model": "gemini-3-pro-preview",
+      "model_id": "gemini-3-pro-preview",
+      "dimension": "Format Standards",
+      "dimension_id": "format_standards",
+      "score": 0.0,
+      "samples": 1103
+    },
+    {
+      "model": "GLM-4.6",
+      "model_id": "glm-4.6",
+      "dimension": "Format Standards",
+      "dimension_id": "format_standards",
+      "score": 0.0,
+      "samples": 1103
+    },
+    {
+      "model": "GPT-5.2",
+      "model_id": "gpt-5.2",
+      "dimension": "Format Standards",
+      "dimension_id": "format_standards",
+      "score": 0.0,
+      "samples": 1103
+    },
+    {
+      "model": "Kimi K2 Thinking",
+      "model_id": "kimi-k2-thinking",
+      "dimension": "Format Standards",
+      "dimension_id": "format_standards",
+      "score": 0.0,
+      "samples": 1103
+    },
+    {
+      "model": "MiniMax M2",
+      "model_id": "minimax-m2",
+      "dimension": "Format Standards",
+      "dimension_id": "format_standards",
+      "score": 0.0,
+      "samples": 1103
+    },
+    {
+      "model": "Qwen3-Max",
+      "model_id": "qwen3-max",
+      "dimension": "Format Standards",
+      "dimension_id": "format_standards",
+      "score": 0.0,
+      "samples": 1103
+    },
+    {
+      "model": "Claude Opus 4.5",
+      "model_id": "claude-opus-4.5",
+      "dimension": "Narrative Efficiency",
+      "dimension_id": "narrative_efficiency",
+      "score": 0.929626291931097,
+      "samples": 1103
+    },
+    {
+      "model": "DeepSeek V3.2",
+      "model_id": "deepseek-v3.2",
+      "dimension": "Narrative Efficiency",
+      "dimension_id": "narrative_efficiency",
+      "score": 0.9141833182230281,
+      "samples": 1103
+    },
+    {
+      "model": "gemini-3-pro-preview",
+      "model_id": "gemini-3-pro-preview",
+      "dimension": "Narrative Efficiency",
+      "dimension_id": "narrative_efficiency",
+      "score": 0.9376026291931097,
+      "samples": 1103
+    },
+    {
+      "model": "GLM-4.6",
+      "model_id": "glm-4.6",
+      "dimension": "Narrative Efficiency",
+      "dimension_id": "narrative_efficiency",
+      "score": 0.9237613780598368,
+      "samples": 1103
+    },
+    {
+      "model": "GPT-5.2",
+      "model_id": "gpt-5.2",
+      "dimension": "Narrative Efficiency",
+      "dimension_id": "narrative_efficiency",
+      "score": 0.9807631912964642,
+      "samples": 1103
+    },
+    {
+      "model": "Kimi K2 Thinking",
+      "model_id": "kimi-k2-thinking",
+      "dimension": "Narrative Efficiency",
+      "dimension_id": "narrative_efficiency",
+      "score": 0.9316580235720762,
+      "samples": 1103
+    },
+    {
+      "model": "MiniMax M2",
+      "model_id": "minimax-m2",
+      "dimension": "Narrative Efficiency",
+      "dimension_id": "narrative_efficiency",
+      "score": 0.9186109700815956,
+      "samples": 1103
+    },
+    {
+      "model": "Qwen3-Max",
+      "model_id": "qwen3-max",
+      "dimension": "Narrative Efficiency",
+      "dimension_id": "narrative_efficiency",
+      "score": 0.9290598683442424,
+      "samples": 1103
+    },
+    {
+      "model": "Claude Opus 4.5",
+      "model_id": "claude-opus-4.5",
+      "dimension": "Character Consistency",
+      "dimension_id": "character_consistency",
+      "score": 0.011843728252727462,
+      "samples": 1103
+    },
+    {
+      "model": "DeepSeek V3.2",
+      "model_id": "deepseek-v3.2",
+      "dimension": "Character Consistency",
+      "dimension_id": "character_consistency",
+      "score": 0.009021270038329707,
+      "samples": 1103
+    },
+    {
+      "model": "gemini-3-pro-preview",
+      "model_id": "gemini-3-pro-preview",
+      "dimension": "Character Consistency",
+      "dimension_id": "character_consistency",
+      "score": 0.013501217445809005,
+      "samples": 1103
+    },
+    {
+      "model": "GLM-4.6",
+      "model_id": "glm-4.6",
+      "dimension": "Character Consistency",
+      "dimension_id": "character_consistency",
+      "score": 0.010893272026621471,
+      "samples": 1103
+    },
+    {
+      "model": "GPT-5.2",
+      "model_id": "gpt-5.2",
+      "dimension": "Character Consistency",
+      "dimension_id": "character_consistency",
+      "score": 0.006279221461719335,
+      "samples": 1103
+    },
+    {
+      "model": "Kimi K2 Thinking",
+      "model_id": "kimi-k2-thinking",
+      "dimension": "Character Consistency",
+      "dimension_id": "character_consistency",
+      "score": 0.009931644741556202,
+      "samples": 1103
+    },
+    {
+      "model": "MiniMax M2",
+      "model_id": "minimax-m2",
+      "dimension": "Character Consistency",
+      "dimension_id": "character_consistency",
+      "score": 0.009173786993662062,
+      "samples": 1103
+    },
+    {
+      "model": "Qwen3-Max",
+      "model_id": "qwen3-max",
+      "dimension": "Character Consistency",
+      "dimension_id": "character_consistency",
+      "score": 0.007482360665842529,
+      "samples": 1103
+    },
+    {
+      "model": "Claude Opus 4.5",
+      "model_id": "claude-opus-4.5",
+      "dimension": "Emotional Depth",
+      "dimension_id": "emotional_depth",
+      "score": 2.4342701722574795,
+      "samples": 1103
+    },
+    {
+      "model": "DeepSeek V3.2",
+      "model_id": "deepseek-v3.2",
+      "dimension": "Emotional Depth",
+      "dimension_id": "emotional_depth",
+      "score": 2.7026291931097006,
+      "samples": 1103
+    },
+    {
+      "model": "gemini-3-pro-preview",
+      "model_id": "gemini-3-pro-preview",
+      "dimension": "Emotional Depth",
+      "dimension_id": "emotional_depth",
+      "score": 2.1804170444242974,
+      "samples": 1103
+    },
+    {
+      "model": "GLM-4.6",
+      "model_id": "glm-4.6",
+      "dimension": "Emotional Depth",
+      "dimension_id": "emotional_depth",
+      "score": 2.766999093381686,
+      "samples": 1103
+    },
+    {
+      "model": "GPT-5.2",
+      "model_id": "gpt-5.2",
+      "dimension": "Emotional Depth",
+      "dimension_id": "emotional_depth",
+      "score": 2.9120580235720763,
+      "samples": 1103
+    },
+    {
+      "model": "Kimi K2 Thinking",
+      "model_id": "kimi-k2-thinking",
+      "dimension": "Emotional Depth",
+      "dimension_id": "emotional_depth",
+      "score": 2.7515865820489576,
+      "samples": 1103
+    },
+    {
+      "model": "MiniMax M2",
+      "model_id": "minimax-m2",
+      "dimension": "Emotional Depth",
+      "dimension_id": "emotional_depth",
+      "score": 2.1414324569356302,
+      "samples": 1103
+    },
+    {
+      "model": "Qwen3-Max",
+      "model_id": "qwen3-max",
+      "dimension": "Emotional Depth",
+      "dimension_id": "emotional_depth",
+      "score": 2.700815956482321,
+      "samples": 1103
+    },
+    {
+      "model": "Claude Opus 4.5",
+      "model_id": "claude-opus-4.5",
+      "dimension": "Logic Consistency",
+      "dimension_id": "logic_consistency",
+      "score": 0.024852890385528643,
+      "samples": 1103
+    },
+    {
+      "model": "DeepSeek V3.2",
+      "model_id": "deepseek-v3.2",
+      "dimension": "Logic Consistency",
+      "dimension_id": "logic_consistency",
+      "score": 0.023249168933212452,
+      "samples": 1103
+    },
+    {
+      "model": "gemini-3-pro-preview",
+      "model_id": "gemini-3-pro-preview",
+      "dimension": "Logic Consistency",
+      "dimension_id": "logic_consistency",
+      "score": 0.03564230022017873,
+      "samples": 1103
+    },
+    {
+      "model": "GLM-4.6",
+      "model_id": "glm-4.6",
+      "dimension": "Logic Consistency",
+      "dimension_id": "logic_consistency",
+      "score": 0.044876760350559076,
+      "samples": 1103
+    },
+    {
+      "model": "GPT-5.2",
+      "model_id": "gpt-5.2",
+      "dimension": "Logic Consistency",
+      "dimension_id": "logic_consistency",
+      "score": 0.02013601865043388,
+      "samples": 1103
+    },
+    {
+      "model": "Kimi K2 Thinking",
+      "model_id": "kimi-k2-thinking",
+      "dimension": "Logic Consistency",
+      "dimension_id": "logic_consistency",
+      "score": 0.03447589690454604,
+      "samples": 1103
+    },
+    {
+      "model": "MiniMax M2",
+      "model_id": "minimax-m2",
+      "dimension": "Logic Consistency",
+      "dimension_id": "logic_consistency",
+      "score": 0.0572622846781505,
+      "samples": 1103
+    },
+    {
+      "model": "Qwen3-Max",
+      "model_id": "qwen3-max",
+      "dimension": "Logic Consistency",
+      "dimension_id": "logic_consistency",
+      "score": 0.049290814373497964,
+      "samples": 1103
+    },
+    {
+      "model": "Claude Opus 4.5",
+      "model_id": "claude-opus-4.5",
+      "dimension": "Conflict Handling",
+      "dimension_id": "conflict_handling",
+      "score": 1.801450589301904,
+      "samples": 1103
+    },
+    {
+      "model": "DeepSeek V3.2",
+      "model_id": "deepseek-v3.2",
+      "dimension": "Conflict Handling",
+      "dimension_id": "conflict_handling",
+      "score": 1.8105167724388032,
+      "samples": 1103
+    },
+    {
+      "model": "gemini-3-pro-preview",
+      "model_id": "gemini-3-pro-preview",
+      "dimension": "Conflict Handling",
+      "dimension_id": "conflict_handling",
+      "score": 1.8667271078875793,
+      "samples": 1103
+    },
+    {
+      "model": "GLM-4.6",
+      "model_id": "glm-4.6",
+      "dimension": "Conflict Handling",
+      "dimension_id": "conflict_handling",
+      "score": 1.8359020852221215,
+      "samples": 1103
+    },
+    {
+      "model": "GPT-5.2",
+      "model_id": "gpt-5.2",
+      "dimension": "Conflict Handling",
+      "dimension_id": "conflict_handling",
+      "score": 1.843155031731641,
+      "samples": 1103
+    },
+    {
+      "model": "Kimi K2 Thinking",
+      "model_id": "kimi-k2-thinking",
+      "dimension": "Conflict Handling",
+      "dimension_id": "conflict_handling",
+      "score": 1.771532184950136,
+      "samples": 1103
+    },
+    {
+      "model": "MiniMax M2",
+      "model_id": "minimax-m2",
+      "dimension": "Conflict Handling",
+      "dimension_id": "conflict_handling",
+      "score": 1.729827742520399,
+      "samples": 1103
+    },
+    {
+      "model": "Qwen3-Max",
+      "model_id": "qwen3-max",
+      "dimension": "Conflict Handling",
+      "dimension_id": "conflict_handling",
+      "score": 1.8168631006346327,
+      "samples": 1103
+    }
+  ]
+}

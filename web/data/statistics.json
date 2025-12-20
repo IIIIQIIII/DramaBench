@@ -1,0 +1,123 @@
+{
+  "overview": {
+    "total_scripts": 1103,
+    "total_evaluations": 8824,
+    "models_evaluated": 8,
+    "dimensions": 6,
+    "avg_script_length": 250,
+    "evaluation_period": "2025-12-16 to 2025-12-20"
+  },
+  "dimensions": [
+    {
+      "id": "format_standards",
+      "name": "Format Standards",
+      "description": "Adherence to screenplay format (Fountain syntax)",
+      "type": "rule-based",
+      "key_metrics": [
+        "Format Error Rate",
+        "Novelization Index",
+        "Dialogue-Action Ratio"
+      ]
+    },
+    {
+      "id": "narrative_efficiency",
+      "name": "Narrative Efficiency",
+      "description": "Story progression effectiveness and pacing",
+      "type": "llm-labeled",
+      "key_metrics": [
+        "Effective Narrative Rate",
+        "Beats Per Page"
+      ]
+    },
+    {
+      "id": "character_consistency",
+      "name": "Character Consistency",
+      "description": "Character voice and behavior consistency",
+      "type": "llm-labeled",
+      "key_metrics": [
+        "Out-of-Character Rate",
+        "Voice Distinctiveness"
+      ]
+    },
+    {
+      "id": "emotional_depth",
+      "name": "Emotional Depth",
+      "description": "Emotional arc development and complexity",
+      "type": "llm-labeled",
+      "key_metrics": [
+        "Arc Score",
+        "Complexity Ratio"
+      ]
+    },
+    {
+      "id": "logic_consistency",
+      "name": "Logic Consistency",
+      "description": "Factual coherence and logical continuity",
+      "type": "llm-labeled",
+      "key_metrics": [
+        "Logic Break Rate",
+        "Context Coherence"
+      ]
+    },
+    {
+      "id": "conflict_handling",
+      "name": "Conflict Handling",
+      "description": "Conflict development and resolution quality",
+      "type": "llm-labeled",
+      "key_metrics": [
+        "Conflict Score",
+        "Drop Rate"
+      ]
+    }
+  ],
+  "models": [
+    {
+      "id": "claude-opus-4.5",
+      "name": "Claude Opus 4.5",
+      "provider": "Anthropic",
+      "description": "Latest Claude model with enhanced creative writing"
+    },
+    {
+      "id": "gpt-5.2",
+      "name": "GPT-5.2",
+      "provider": "OpenAI",
+      "description": "GPT-5 series with improved reasoning"
+    },
+    {
+      "id": "gemini-3-pro",
+      "name": "Gemini 3 Pro",
+      "provider": "Google DeepMind",
+      "description": "Gemini 3 generation flagship model"
+    },
+    {
+      "id": "qwen3-max",
+      "name": "Qwen3-Max",
+      "provider": "Alibaba Cloud",
+      "description": "Qwen 3 series maximum capability model"
+    },
+    {
+      "id": "deepseek-v3.2",
+      "name": "DeepSeek V3.2",
+      "provider": "DeepSeek",
+      "description": "DeepSeek V3 series with enhanced context"
+    },
+    {
+      "id": "minimax-m2",
+      "name": "MiniMax M2",
+      "provider": "MiniMax",
+      "description": "MiniMax M2 generation for coding and agents"
+    },
+    {
+      "id": "kimi-k2-thinking",
+      "name": "Kimi K2 Thinking",
+      "provider": "Moonshot AI",
+      "description": "1T parameter MoE with 256K context"
+    },
+    {
+      "id": "glm-4.6",
+      "name": "GLM-4.6",
+      "provider": "Zhipu AI",
+      "description": "ChatGLM 4 series latest version"
+    }
+  ]
+}

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard - DramaBench</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+
+    <link rel="stylesheet" href="css/apple-style.css">
+    <style>
+        .leaderboard-header {
+            text-align: center;
+            padding: var(--spacing-xl) var(--spacing-md);
+            background: linear-gradient(135deg, #0a0a0a 0%, #16213e 50%, #0a0a0a 100%);
+            color: var(--apple-white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .leaderboard-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.03) 50%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .leaderboard-header h1 {
+            color: var(--apple-white);
+        }
+
+        .leaderboard-header p {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .rank-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: var(--font-size-lg);
+        }
+
+        .rank-1 {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: var(--apple-white);
+        }
+
+        .rank-2 {
+            background: linear-gradient(135deg, #C0C0C0, #A8A8A8);
+            color: var(--apple-white);
+        }
+
+        .rank-3 {
+            background: linear-gradient(135deg, #CD7F32, #B8733B);
+            color: var(--apple-white);
+        }
+
+        .rank-other {
+            background-color: var(--apple-gray-2);
+            color: var(--apple-gray-5);
+        }
+
+        .model-row {
+            display: grid;
+            grid-template-columns: 60px 1fr auto;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: var(--apple-white);
+            border-radius: var(--border-radius-md);
+            margin-bottom: var(--spacing-sm);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-fast);
+            cursor: pointer;
+        }
+
+        .model-row:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateX(4px);
+        }
+
+        .model-info h3 {
+            font-size: var(--font-size-xl);
+            margin-bottom: 4px;
+        }
+
+        .model-info p {
+            font-size: var(--font-size-sm);
+            color: var(--apple-gray-4);
+            margin: 0;
+        }
+
+        .model-score {
+            text-align: right;
+        }
+
+        .score-value {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            color: var(--apple-blue);
+        }
+
+        .score-label {
+            font-size: var(--font-size-xs);
+            color: var(--apple-gray-4);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .dimension-scores {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+            padding: var(--spacing-md);
+            background-color: var(--apple-gray-1);
+            border-radius: var(--border-radius-md);
+        }
+
+        .dimension-score-item {
+            text-align: center;
+        }
+
+        .dimension-score-item .label {
+            font-size: var(--font-size-xs);
+            color: var(--apple-gray-5);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .dimension-score-item .value {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--apple-black);
+        }
+
+        .filters {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border-radius: var(--border-radius-xl);
+            border: 2px solid var(--apple-gray-3);
+            background: var(--apple-white);
+            color: var(--apple-gray-5);
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .filter-btn:hover {
+            border-color: var(--apple-blue);
+            color: var(--apple-blue);
+        }
+
+        .filter-btn.active {
+            background-color: var(--apple-blue);
+            border-color: var(--apple-blue);
+            color: var(--apple-white);
+        }
+
+        .expanded-details {
+            display: none;
+            padding: var(--spacing-md);
+            background-color: var(--apple-gray-1);
+            border-radius: var(--border-radius-md);
+            margin-top: var(--spacing-sm);
+        }
+
+        .model-row.expanded .expanded-details {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div class="navbar-logo">DramaBench</div>
+            <ul class="navbar-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="leaderboard.html">Leaderboard</a></li>
+                <li><a href="cases.html">Case Studies</a></li>
+                <li><a href="https://github.com/IIIIQIIII/DramaBench" target="_blank">GitHub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <div class="leaderboard-header">
+        <h1>Model Leaderboard</h1>
+        <p>Rankings across 6 evaluation dimensions • 8,824 total evaluations</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container" style="padding-top: var(--spacing-xl); padding-bottom: var(--spacing-xl);">
+
+        <!-- Filters -->
+        <div class="filters">
+            <button class="filter-btn active" data-dimension="overall">Overall Ranking</button>
+            <button class="filter-btn" data-dimension="format_standards">Format Standards</button>
+            <button class="filter-btn" data-dimension="narrative_efficiency">Narrative Efficiency</button>
+            <button class="filter-btn" data-dimension="character_consistency">Character Consistency</button>
+            <button class="filter-btn" data-dimension="emotional_depth">Emotional Depth</button>
+            <button class="filter-btn" data-dimension="logic_consistency">Logic Consistency</button>
+            <button class="filter-btn" data-dimension="conflict_handling">Conflict Handling</button>
+        </div>
+
+        <!-- Leaderboard List -->
+        <div id="leaderboard-list">
+            <!-- Models will be populated here by JavaScript -->
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 DramaBench. Released under MIT License.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Load leaderboard data
+        let leaderboardData = null;
+        let currentDimension = 'overall';
+
+        async function loadData() {
+            try {
+                const response = await fetch('data/leaderboard.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                leaderboardData = await response.json();
+                renderLeaderboard();
+            } catch (error) {
+                console.error('Error loading leaderboard data:', error);
+                const errorMessage = error.message.includes('Failed to fetch') || error.message.includes('NetworkError')
+                    ? 'Please use a local HTTP server to view this demo.<br><br>Run: <code style="background: var(--apple-gray-2); padding: 4px 8px; border-radius: 4px;">./start_demo.sh</code><br>or<br><code style="background: var(--apple-gray-2); padding: 4px 8px; border-radius: 4px;">python3 -m http.server 8000</code>'
+                    : 'Error loading data. Please check the console for details.';
+                document.getElementById('leaderboard-list').innerHTML =
+                    `<div style="text-align: center; padding: var(--spacing-xl); background: var(--apple-gray-1); border-radius: var(--border-radius-lg);">
+                        <h3 style="color: var(--apple-gray-5); margin-bottom: var(--spacing-md);">⚠️ Data Loading Error</h3>
+                        <p style="color: var(--apple-gray-4);">${errorMessage}</p>
+                    </div>`;
+            }
+        }
+
+        function renderLeaderboard() {
+            if (!leaderboardData) return;
+
+            const container = document.getElementById('leaderboard-list');
+            container.innerHTML = '';
+
+            const models = currentDimension === 'overall'
+                ? leaderboardData.overall_rankings
+                : getRankedByDimension(currentDimension);
+
+            models.forEach((model, index) => {
+                const rank = index + 1;
+                const rankClass = rank === 1 ? 'rank-1' : rank === 2 ? 'rank-2' : rank === 3 ? 'rank-3' : 'rank-other';
+
+                const modelRow = document.createElement('div');
+                modelRow.className = 'model-row';
+                modelRow.innerHTML = `
+                    <div class="rank-badge ${rankClass}">${rank}</div>
+                    <div class="model-info">
+                        <h3>${model.model}</h3>
+                        <p>${model.model_id}</p>
+                    </div>
+                    <div class="model-score">
+                        <div class="score-value">${model.avg_score ? model.avg_score.toFixed(3) : model.score.toFixed(3)}</div>
+                        <div class="score-label">${currentDimension === 'overall' ? 'Avg Score' : 'Score'}</div>
+                    </div>
+                    <div class="expanded-details">
+                        ${renderDimensionScores(model)}
+                    </div>
+                `;
+
+                modelRow.addEventListener('click', () => {
+                    modelRow.classList.toggle('expanded');
+                });
+
+                container.appendChild(modelRow);
+            });
+        }
+
+        function renderDimensionScores(model) {
+            if (!model.dimension_scores) return '';
+
+            const dimensions = Object.entries(model.dimension_scores);
+            return `
+                <div class="dimension-scores">
+                    ${dimensions.map(([dim, score]) => `
+                        <div class="dimension-score-item">
+                            <span class="label">${dim}</span>
+                            <span class="value">${score.toFixed(3)}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function getRankedByDimension(dimension) {
+            if (!leaderboardData) return [];
+
+            const dimensionData = leaderboardData.dimension_details
+                .filter(item => item.dimension_id === dimension);
+
+            const grouped = dimensionData.reduce((acc, item) => {
+                if (!acc[item.model]) {
+                    acc[item.model] = {
+                        model: item.model,
+                        model_id: item.model_id,
+                        score: item.score,
+                        samples: item.samples
+                    };
+                }
+                return acc;
+            }, {});
+
+            return Object.values(grouped).sort((a, b) => {
+                // For error rates, lower is better
+                if (dimension === 'format_standards' || dimension === 'character_consistency' ||
+                    dimension === 'logic_consistency') {
+                    return a.score - b.score;
+                }
+                // For other metrics, higher is better
+                return b.score - a.score;
+            });
+        }
+
+        // Filter button handlers
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentDimension = btn.dataset.dimension;
+                renderLeaderboard();
+            });
+        });
+
+        // Load data on page load
+        loadData();
+    </script>
+</body>
+</html>

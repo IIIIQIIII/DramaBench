@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DramaBench - A Six-Dimensional Evaluation Framework for Drama Script Continuation">
+    <title>DramaBench - Drama Script Evaluation Benchmark</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+    <link rel="stylesheet" href="web/css/apple-style.css">
+    <style>
+        /* Hero gradient animation - Premium Dark */
+        .hero {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #0a0a0a 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero h1, .hero p {
+            color: var(--apple-white);
+        }
+
+        .hero-stat-value {
+            color: var(--apple-white);
+        }
+
+        .hero-stat-label {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Feature cards */
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .dimension-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dimension-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--apple-blue);
+            transform: scaleY(0);
+            transition: transform var(--transition-base);
+        }
+
+        .dimension-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        /* CTA Section - Premium Dark Gradient */
+        .cta-section {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+            color: var(--apple-white);
+            padding: var(--spacing-3xl) var(--spacing-md);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 0%, rgba(255,255,255,0.02) 50%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .cta-section h2 {
+            color: var(--apple-white);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .cta-section p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-light {
+            background-color: var(--apple-white);
+            color: var(--apple-black);
+        }
+
+        .btn-light:hover {
+            background-color: var(--apple-gray-2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div class="navbar-logo">DramaBench</div>
+            <ul class="navbar-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="web/leaderboard.html">Leaderboard</a></li>
+                <li><a href="web/cases.html">Case Studies</a></li>
+                <li><a href="https://github.com/IIIIQIIII/DramaBench" target="_blank">GitHub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>DramaBench</h1>
+            <p>A Six-Dimensional Evaluation Framework for Drama Script Continuation</p>
+
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <span class="hero-stat-value">1,103</span>
+                    <span class="hero-stat-label">Unique Scripts</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-value">8,824</span>
+                    <span class="hero-stat-label">Evaluations</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-value">8</span>
+                    <span class="hero-stat-label">SOTA Models</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-value">6</span>
+                    <span class="hero-stat-label">Dimensions</span>
+                </div>
+            </div>
+
+            <div class="cta-buttons mt-5">
+                <a href="web/leaderboard.html" class="btn btn-primary">View Leaderboard</a>
+                <a href="web/cases.html" class="btn btn-secondary" style="background: rgba(255,255,255,0.2); border-color: white; color: white;">Explore Cases</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">What is DramaBench?</h2>
+            <p class="section-subtitle">
+                DramaBench is the first large-scale benchmark for evaluating drama script continuation
+                across six independent dimensions. Our hybrid evaluation system combines rule-based
+                analysis with LLM-based labeling to provide objective, reproducible assessments.
+            </p>
+
+            <div class="grid grid-3 mt-5">
+                <div class="card">
+                    <div class="feature-icon">🎯</div>
+                    <div class="card-title">Six Dimensions</div>
+                    <div class="card-content">
+                        Comprehensive evaluation across Format Standards, Narrative Efficiency,
+                        Character Consistency, Emotional Depth, Logic Consistency, and Conflict Handling.
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="feature-icon">🔬</div>
+                    <div class="card-title">Rigorous Validation</div>
+                    <div class="card-content">
+                        252 statistical significance tests (65.9% significant), human validation on 188 scripts,
+                        and comprehensive ablation studies confirming dimension independence.
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="feature-icon">📊</div>
+                    <div class="card-title">Large-Scale Analysis</div>
+                    <div class="card-content">
+                        8,824 total evaluations across 8 state-of-the-art language models,
+                        with detailed error taxonomy and model-specific profiles.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Six Dimensions Section -->
+    <section style="background-color: var(--apple-white);">
+        <div class="container">
+            <h2 class="section-title">Six Evaluation Dimensions</h2>
+            <p class="section-subtitle">
+                Each dimension captures distinct quality aspects with independent metrics
+            </p>
+
+            <div class="grid grid-2 mt-5">
+                <div class="card dimension-card">
+                    <div class="badge badge-blue mb-2">RULE-BASED</div>
+                    <div class="card-title">Format Standards</div>
+                    <div class="card-content">
+                        <p><strong>Metrics:</strong> Format Error Rate, Novelization Index, Dialogue-Action Ratio</p>
+                        <p class="mt-2">100% reproducible screenplay format validation using Fountain syntax standards.</p>
+                    </div>
+                </div>
+
+                <div class="card dimension-card">
+                    <div class="badge badge-green mb-2">LLM-LABELED</div>
+                    <div class="card-title">Narrative Efficiency</div>
+                    <div class="card-content">
+                        <p><strong>Metrics:</strong> Effective Narrative Rate (ENR), Beats Per Page</p>
+                        <p class="mt-2">Event-level annotation: Driver/Static/Redundant beats classification.</p>
+                    </div>
+                </div>
+
+                <div class="card dimension-card">
+                    <div class="badge badge-green mb-2">LLM-LABELED</div>
+                    <div class="card-title">Character Consistency</div>
+                    <div class="card-content">
+                        <p><strong>Metrics:</strong> Out-of-Character Rate, Voice Distinctiveness</p>
+                        <p class="mt-2">Dialogue-level annotation with character persona profiles.</p>
+                    </div>
+                </div>
+
+                <div class="card dimension-card">
+                    <div class="badge badge-green mb-2">LLM-LABELED</div>
+                    <div class="card-title">Emotional Depth</div>
+                    <div class="card-content">
+                        <p><strong>Metrics:</strong> Arc Score, Complexity Ratio</p>
+                        <p class="mt-2">Scene-level emotional tracking with valence and arousal dimensions.</p>
+                    </div>
+                </div>
+
+                <div class="card dimension-card">
+                    <div class="badge badge-green mb-2">LLM-LABELED</div>
+                    <div class="card-title">Logic Consistency</div>
+                    <div class="card-content">
+                        <p><strong>Metrics:</strong> Logic Break Rate, Context Coherence</p>
+                        <p class="mt-2">Fact-level atomic verification ensuring narrative coherence.</p>
+                    </div>
+                </div>
+
+                <div class="card dimension-card">
+                    <div class="badge badge-green mb-2">LLM-LABELED</div>
+                    <div class="card-title">Conflict Handling</div>
+                    <div class="card-content">
+                        <p><strong>Metrics:</strong> Conflict Score, Drop Rate</p>
+                        <p class="mt-2">Global-level conflict classification: Escalation/Resolution/Maintained/Dropped.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Models Section -->
+    <section>
+        <div class="container">
+            <h2 class="section-title">Evaluated Models</h2>
+            <p class="section-subtitle">
+                8 state-of-the-art language models from leading AI research labs
+            </p>
+
+            <div class="grid grid-4 mt-5">
+                <div class="card">
+                    <div class="card-title" style="font-size: var(--font-size-lg);">GPT-5.2</div>
+                    <div class="card-subtitle">OpenAI</div>
+                    <div class="badge badge-blue">Rank #1</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title" style="font-size: var(--font-size-lg);">Gemini 3 Pro</div>
+                    <div class="card-subtitle">Google DeepMind</div>
+                    <div class="badge badge-green">Rank #2</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title" style="font-size: var(--font-size-lg);">Qwen3-Max</div>
+                    <div class="card-subtitle">Alibaba Cloud</div>
+                    <div class="badge badge-orange">Rank #3</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title" style="font-size: var(--font-size-lg);">Claude Opus 4.5</div>
+                    <div class="card-subtitle">Anthropic</div>
+                    <div class="badge badge-gray">Rank #4</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title" style="font-size: var(--font-size-lg);">DeepSeek V3.2</div>
+                    <div class="card-subtitle">DeepSeek</div>
+                    <div class="badge badge-gray">Rank #5</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title" style="font-size: var(--font-size-lg);">MiniMax M2</div>
+                    <div class="card-subtitle">MiniMax</div>
+                    <div class="badge badge-gray">Rank #6</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title" style="font-size: var(--font-size-lg);">Kimi K2 Thinking</div>
+                    <div class="card-subtitle">Moonshot AI</div>
+                    <div class="badge badge-gray">Rank #7</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title" style="font-size: var(--font-size-lg);">GLM-4.6</div>
+                    <div class="card-subtitle">Zhipu AI</div>
+                    <div class="badge badge-gray">Rank #8</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Results Section -->
+    <section style="background-color: var(--apple-white);">
+        <div class="container">
+            <h2 class="section-title">Key Results</h2>
+
+            <div class="grid grid-3 mt-5">
+                <div class="card">
+                    <div class="card-title">Statistical Significance</div>
+                    <div class="card-content">
+                        <p><strong>166/252 comparisons significant</strong></p>
+                        <p class="mt-2">65.9% of pairwise comparisons show statistically significant differences
+                        with FDR correction (p < 0.05).</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Dimension Independence</div>
+                    <div class="card-content">
+                        <p><strong>Mean |r| = 0.020</strong></p>
+                        <p class="mt-2">Extremely low correlation between dimensions confirms each captures
+                        distinct quality aspects.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">Human-LLM Agreement</div>
+                    <div class="card-content">
+                        <p><strong>Strong agreement on 3/5 dimensions</strong></p>
+                        <p class="mt-2">Logic (r=0.48***), Emotional Depth (κ=0.53), Conflict (κ=0.42)
+                        show substantial alignment.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Explore?</h2>
+            <p>View detailed model rankings, explore case studies, and access the complete dataset</p>
+
+            <div class="cta-buttons">
+                <a href="web/leaderboard.html" class="btn btn-light">View Leaderboard</a>
+                <a href="web/cases.html" class="btn btn-light">Case Studies</a>
+                <a href="https://github.com/IIIIQIIII/DramaBench" class="btn btn-light" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 DramaBench. Released under MIT License.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple fade-in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

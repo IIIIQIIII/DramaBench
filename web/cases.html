@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Studies - DramaBench</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+
+    <link rel="stylesheet" href="css/apple-style.css">
+    <style>
+        .cases-header {
+            text-align: center;
+            padding: var(--spacing-xl) var(--spacing-md);
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f3460 50%, #1a1a1a 100%);
+            color: var(--apple-white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cases-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.03) 50%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .cases-header h1, .cases-header p {
+            color: var(--apple-white);
+        }
+
+        .case-card {
+            background: var(--apple-white);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-base);
+            border-left: 4px solid transparent;
+        }
+
+        .case-card.success {
+            border-left-color: var(--apple-green);
+        }
+
+        .case-card.failure {
+            border-left-color: var(--apple-red);
+        }
+
+        .case-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .case-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .case-title {
+            font-size: var(--font-size-xl);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .case-meta {
+            display: flex;
+            gap: var(--spacing-xs);
+            flex-wrap: wrap;
+            margin: var(--spacing-sm) 0;
+        }
+
+        .script-excerpt {
+            background-color: var(--apple-gray-1);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-sm);
+            margin: var(--spacing-sm) 0;
+            font-family: 'Courier New', monospace;
+            font-size: var(--font-size-sm);
+            line-height: 1.5;
+            max-height: 200px;
+            overflow-y: auto;
+            color: var(--apple-gray-6);
+            white-space: pre-wrap;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--spacing-sm);
+            margin: var(--spacing-md) 0;
+            padding: var(--spacing-sm);
+            background-color: var(--apple-gray-1);
+            border-radius: var(--border-radius-md);
+        }
+
+        .metric-item {
+            text-align: center;
+        }
+
+        .metric-label {
+            font-size: var(--font-size-xs);
+            color: var(--apple-gray-5);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .metric-value {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--apple-black);
+        }
+
+        .metric-value.good {
+            color: var(--apple-green);
+        }
+
+        .metric-value.bad {
+            color: var(--apple-red);
+        }
+
+        .analysis-section {
+            margin-top: var(--spacing-md);
+            padding: var(--spacing-sm);
+            background-color: rgba(0, 113, 227, 0.05);
+            border-radius: var(--border-radius-md);
+        }
+
+        .analysis-section h4 {
+            font-size: var(--font-size-base);
+            margin-bottom: var(--spacing-xs);
+            color: var(--apple-blue);
+        }
+
+        .analysis-section ul {
+            margin-left: var(--spacing-md);
+            color: var(--apple-gray-5);
+        }
+
+        .analysis-section li {
+            margin-bottom: 4px;
+        }
+
+        .dimension-tabs {
+            display: flex;
+            gap: var(--spacing-xs);
+            overflow-x: auto;
+            padding-bottom: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .dimension-tab {
+            padding: 12px 20px;
+            border-radius: var(--border-radius-xl);
+            background: var(--apple-white);
+            border: 2px solid var(--apple-gray-3);
+            color: var(--apple-gray-5);
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all var(--transition-fast);
+        }
+
+        .dimension-tab:hover {
+            border-color: var(--apple-blue);
+            color: var(--apple-blue);
+        }
+
+        .dimension-tab.active {
+            background-color: var(--apple-blue);
+            border-color: var(--apple-blue);
+            color: var(--apple-white);
+        }
+
+        .expand-btn {
+            background: transparent;
+            border: none;
+            color: var(--apple-blue);
+            font-size: var(--font-size-sm);
+            cursor: pointer;
+            padding: var(--spacing-xs);
+            transition: color var(--transition-fast);
+        }
+
+        .expand-btn:hover {
+            color: var(--apple-blue-hover);
+        }
+
+        .expandable-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height var(--transition-base);
+        }
+
+        .expandable-content.expanded {
+            max-height: 2000px;
+        }
+
+        .type-filter {
+            display: flex;
+            gap: var(--spacing-sm);
+            justify-content: center;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .type-filter button {
+            padding: 8px 20px;
+            border-radius: var(--border-radius-xl);
+            border: 2px solid var(--apple-gray-3);
+            background: var(--apple-white);
+            color: var(--apple-gray-5);
+            font-size: var(--font-size-sm);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .type-filter button.success.active {
+            background-color: var(--apple-green);
+            border-color: var(--apple-green);
+            color: var(--apple-white);
+        }
+
+        .type-filter button.failure.active {
+            background-color: var(--apple-red);
+            border-color: var(--apple-red);
+            color: var(--apple-white);
+        }
+
+        .type-filter button.all.active {
+            background-color: var(--apple-blue);
+            border-color: var(--apple-blue);
+            color: var(--apple-white);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div class="navbar-logo">DramaBench</div>
+            <ul class="navbar-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="leaderboard.html">Leaderboard</a></li>
+                <li><a href="cases.html">Case Studies</a></li>
+                <li><a href="https://github.com/IIIIQIIII/DramaBench" target="_blank">GitHub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <div class="cases-header">
+        <h1>Case Studies</h1>
+        <p>24 curated examples across 6 dimensions • Success and failure analysis</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container" style="padding-top: var(--spacing-xl); padding-bottom: var(--spacing-xl);">
+
+        <!-- Dimension Tabs -->
+        <div class="dimension-tabs">
+            <button class="dimension-tab active" data-dimension="all">All Dimensions</button>
+            <button class="dimension-tab" data-dimension="format">Format Standards</button>
+            <button class="dimension-tab" data-dimension="narrative">Narrative Efficiency</button>
+            <button class="dimension-tab" data-dimension="character">Character Consistency</button>
+            <button class="dimension-tab" data-dimension="emotional">Emotional Depth</button>
+            <button class="dimension-tab" data-dimension="logic">Logic Consistency</button>
+            <button class="dimension-tab" data-dimension="conflict">Conflict Handling</button>
+        </div>
+
+        <!-- Type Filter -->
+        <div class="type-filter">
+            <button class="all active" data-type="all">All Cases</button>
+            <button class="success" data-type="success">✓ Success Cases</button>
+            <button class="failure" data-type="failure">✗ Failure Cases</button>
+        </div>
+
+        <!-- Case Studies Container -->
+        <div id="cases-container">
+            <!-- Cases will be populated here by JavaScript -->
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 DramaBench. Released under MIT License.</p>
+        </div>
+    </footer>
+
+    <script>
+        let casesData = null;
+        let currentDimension = 'all';
+        let currentType = 'all';
+
+        async function loadCases() {
+            try {
+                const response = await fetch('data/case_studies.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                casesData = await response.json();
+                renderCases();
+            } catch (error) {
+                console.error('Error loading case studies:', error);
+                const errorMessage = error.message.includes('Failed to fetch') || error.message.includes('NetworkError')
+                    ? 'Please use a local HTTP server to view this demo.<br><br>Run: <code style="background: var(--apple-gray-2); padding: 4px 8px; border-radius: 4px;">./start_demo.sh</code><br>or<br><code style="background: var(--apple-gray-2); padding: 4px 8px; border-radius: 4px;">python3 -m http.server 8000</code>'
+                    : 'Error loading data. Please check the console for details.';
+                document.getElementById('cases-container').innerHTML =
+                    `<div style="text-align: center; padding: var(--spacing-xl); background: var(--apple-gray-1); border-radius: var(--border-radius-lg);">
+                        <h3 style="color: var(--apple-gray-5); margin-bottom: var(--spacing-md);">⚠️ Data Loading Error</h3>
+                        <p style="color: var(--apple-gray-4);">${errorMessage}</p>
+                    </div>`;
+            }
+        }
+
+        function renderCases() {
+            if (!casesData) return;
+
+            const container = document.getElementById('cases-container');
+            container.innerHTML = '';
+
+            let casesToRender = [];
+
+            if (currentDimension === 'all') {
+                // Get all cases
+                casesToRender = casesData.all_cases || [];
+            } else {
+                // Get cases for specific dimension
+                const dimensionCases = casesData.cases_by_dimension[currentDimension] || [];
+                casesToRender = dimensionCases;
+            }
+
+            // Filter by type
+            if (currentType !== 'all') {
+                casesToRender = casesToRender.filter(c => c.type === currentType);
+            }
+
+            if (casesToRender.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--apple-gray-4);">No cases found for this filter.</p>';
+                return;
+            }
+
+            casesToRender.forEach((caseItem, index) => {
+                const caseCard = createCaseCard(caseItem, index);
+                container.appendChild(caseCard);
+            });
+        }
+
+        function createCaseCard(caseItem, index) {
+            const card = document.createElement('div');
+            card.className = `case-card ${caseItem.type}`;
+
+            const typeLabel = caseItem.type === 'success' ? '✓ Success' : '✗ Failure';
+            const typeBadgeClass = caseItem.type === 'success' ? 'badge-green' : 'badge-red';
+
+            // Extract key metrics
+            const metrics = extractKeyMetrics(caseItem);
+
+            card.innerHTML = `
+                <div class="case-header">
+                    <div>
+                        <div class="case-title">${caseItem.model}</div>
+                        <div class="case-meta">
+                            <span class="badge ${typeBadgeClass}">${typeLabel}</span>
+                            <span class="badge badge-blue">${formatDimension(caseItem.dimension)}</span>
+                            <span class="badge badge-gray">Rank: ${caseItem.rank}</span>
+                        </div>
+                    </div>
+                    <button class="expand-btn" onclick="toggleExpand(${index})">
+                        <span id="expand-icon-${index}">▼ Show Details</span>
+                    </button>
+                </div>
+
+                ${renderMetrics(metrics)}
+
+                <div id="expandable-${index}" class="expandable-content">
+                    ${caseItem.context_excerpt ? `
+                        <div style="margin-top: var(--spacing-md);">
+                            <h4 style="font-size: var(--font-size-base); margin-bottom: var(--spacing-xs);">Context</h4>
+                            <div class="script-excerpt">${caseItem.context_excerpt}</div>
+                        </div>
+                    ` : ''}
+
+                    ${caseItem.continuation_excerpt ? `
+                        <div style="margin-top: var(--spacing-md);">
+                            <h4 style="font-size: var(--font-size-base); margin-bottom: var(--spacing-xs);">Continuation</h4>
+                            <div class="script-excerpt">${caseItem.continuation_excerpt}</div>
+                        </div>
+                    ` : ''}
+
+                    ${renderAnalysis(caseItem.analysis)}
+                </div>
+            `;
+
+            return card;
+        }
+
+        function extractKeyMetrics(caseItem) {
+            if (!caseItem.metrics) return [];
+
+            const dimension = caseItem.dimension;
+            const metrics = caseItem.metrics;
+            const result = [];
+
+            if (dimension === 'format') {
+                result.push({ label: 'Format Error Rate', value: (metrics.format_error_rate * 100).toFixed(1) + '%', good: metrics.format_error_rate === 0 });
+                result.push({ label: 'Novelization Index', value: metrics.novelization_index?.toFixed(2) || 'N/A', good: metrics.novelization_index < 0.2 });
+            } else if (dimension === 'narrative') {
+                result.push({ label: 'ENR', value: (metrics.enr * 100).toFixed(1) + '%', good: metrics.enr > 0.8 });
+                result.push({ label: 'Beats/Page', value: metrics.beats_per_page?.toFixed(2) || 'N/A', good: metrics.beats_per_page > 2 });
+            } else if (dimension === 'character') {
+                result.push({ label: 'OOC Rate', value: (metrics.ooc_rate * 100).toFixed(1) + '%', good: metrics.ooc_rate === 0 });
+                result.push({ label: 'Voice Distinct.', value: metrics.voice_distinctiveness?.toFixed(2) || 'N/A', good: metrics.voice_distinctiveness > 0.8 });
+            } else if (dimension === 'emotional') {
+                result.push({ label: 'Depth Score', value: metrics.emotional_depth_score?.toFixed(0) || 'N/A', good: metrics.emotional_depth_score > 0.5 });
+                result.push({ label: 'Complex Emotions', value: metrics.complex_emotion_count || 'N/A', good: metrics.complex_emotion_count > 3 });
+            } else if (dimension === 'logic') {
+                result.push({ label: 'Logic Break Rate', value: (metrics.logic_break_rate * 100).toFixed(1) + '%', good: metrics.logic_break_rate === 0 });
+                result.push({ label: 'Context Coherence', value: metrics.context_coherence || 'N/A', good: metrics.context_coherence > 5 });
+            } else if (dimension === 'conflict') {
+                result.push({ label: 'Conflict Type', value: metrics.conflict_type || 'N/A', good: true });
+                result.push({ label: 'Handling', value: metrics.conflict_handling_classification || 'N/A', good: metrics.conflict_handling_classification === 'ESCALATION' });
+            }
+
+            return result;
+        }
+
+        function renderMetrics(metrics) {
+            if (metrics.length === 0) return '';
+
+            return `
+                <div class="metrics-grid">
+                    ${metrics.map(m => `
+                        <div class="metric-item">
+                            <span class="metric-label">${m.label}</span>
+                            <span class="metric-value ${m.good ? 'good' : 'bad'}">${m.value}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function renderAnalysis(analysis) {
+            if (!analysis) return '';
+
+            let html = '<div class="analysis-section">';
+
+            if (analysis.why_success && analysis.why_success.length > 0) {
+                html += '<h4>Why Success</h4><ul>';
+                analysis.why_success.forEach(point => {
+                    html += `<li>${point}</li>`;
+                });
+                html += '</ul>';
+            }
+
+            if (analysis.why_failure && analysis.why_failure.length > 0) {
+                html += '<h4>Why Failure</h4><ul>';
+                analysis.why_failure.forEach(point => {
+                    html += `<li>${point}</li>`;
+                });
+                html += '</ul>';
+            }
+
+            if (analysis.takeaway) {
+                html += `<p style="margin-top: var(--spacing-sm); font-style: italic;"><strong>Key Takeaway:</strong> ${analysis.takeaway}</p>`;
+            }
+
+            html += '</div>';
+            return html;
+        }
+
+        function formatDimension(dim) {
+            const names = {
+                'format': 'Format Standards',
+                'narrative': 'Narrative Efficiency',
+                'character': 'Character Consistency',
+                'emotional': 'Emotional Depth',
+                'logic': 'Logic Consistency',
+                'conflict': 'Conflict Handling'
+            };
+            return names[dim] || dim;
+        }
+
+        function toggleExpand(index) {
+            const content = document.getElementById(`expandable-${index}`);
+            const icon = document.getElementById(`expand-icon-${index}`);
+
+            content.classList.toggle('expanded');
+
+            if (content.classList.contains('expanded')) {
+                icon.textContent = '▲ Hide Details';
+            } else {
+                icon.textContent = '▼ Show Details';
+            }
+        }
+
+        // Event listeners for filters
+        document.querySelectorAll('.dimension-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.dimension-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentDimension = tab.dataset.dimension;
+                renderCases();
+            });
+        });
+
+        document.querySelectorAll('.type-filter button').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.type-filter button').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentType = btn.dataset.type;
+                renderCases();
+            });
+        });
+
+        // Load cases on page load
+        loadCases();
+    </script>
+</body>
+</html>
