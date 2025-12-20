@@ -10,7 +10,7 @@
 [![License](https://img.shields.io/badge/License-MIT-blue)]()
 [![Paper](https://img.shields.io/badge/Paper-Coming%20Soon-orange)]()
 
-[🌐 Web Demo](https://iiiiqiiii.github.io/DramaBench/) • [📊 Leaderboard](#leaderboard) • [📖 Documentation](#documentation) • [💾 Dataset](#dataset)
+[🌐 Web Demo](https://dramabench.pages.dev/) • [📊 Leaderboard](#leaderboard) • [📖 Documentation](#documentation) • [💾 Dataset](#dataset)
 
 </div>
 
@@ -383,8 +383,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 For questions, feedback, or collaboration opportunities:
 
 - **Issues**: [GitHub Issues](https://github.com/IIIIQIIII/DramaBench/issues)
-- **Email**: your.email@example.com
-- **Twitter**: @yourusername
+- **Email**: mas8069@foxmail.com
+- **Twitter**: @mashijiann
 
 ---
 
