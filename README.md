@@ -10,7 +10,7 @@
 [![License](https://img.shields.io/badge/License-MIT-blue)]()
 [![Paper](https://img.shields.io/badge/Paper-arXiv-red)](https://arxiv.org/abs/2512.19012)
 
-[🌐 Web Demo](https://dramabench.pages.dev/) • [📊 Leaderboard](#leaderboard) • [📖 Documentation](#documentation) • [💾 Dataset](#dataset)
+[🌐 Web Demo](https://dramabench.pages.dev/) • [📊 Leaderboard](#leaderboard) • [📖 Documentation](#documentation) • [🤗 Dataset](https://huggingface.co/datasets/FutureMa/DramaBench)
 
 </div>
 
@@ -130,13 +130,44 @@ An interactive, Apple-inspired web interface for exploring evaluation results.
 
 ### 2. Dataset
 
-**Coming Soon**: The complete DramaBench dataset will include:
+**🎉 Now Available on Hugging Face!**
 
-- Drama script contexts and continuations
-- Human annotations and quality labels
+The DramaBench dataset is being released progressively to ensure quality and gather community feedback.
+
+**Current Release (v1.0):**
+- ✅ **100 Drama Scripts** - Available now on Hugging Face
+- 📥 **Download**: [FutureMa/DramaBench](https://huggingface.co/datasets/FutureMa/DramaBench)
+- 📄 **Format**: JSONL with structured metadata
+- 🔓 **License**: MIT License
+- 📊 **Usage**: Load with `datasets` library
+
+**Quick Start:**
+```python
+from datasets import load_dataset
+
+# Load dataset
+dataset = load_dataset("FutureMa/DramaBench", split="train")
+
+# Access samples
+sample = dataset[0]
+print(sample['title'])
+print(sample['context'])
+print(sample['continuation'])
+```
+
+**Release Roadmap:**
+| Version | Samples | Status | Expected Release |
+|---------|---------|--------|------------------|
+| v1.0 | 100 | ✅ Available | 2025-12-23 |
+| v2.0 | 500 | 🔄 Coming Soon | Q1 2026 |
+| v3.0 (Full) | 1,103 | 📋 Planned | Q2 2026 |
+
+**Full Dataset Contents (v3.0):**
+- 1,103 drama script contexts and continuations
+- Model-generated continuations (8 SOTA models)
+- Human annotations and quality assessments
 - Multi-dimensional evaluation metrics
 - Error taxonomy and classification
-- Model outputs from 8 SOTA models
 
 ### 3. Evaluation Code
 
@@ -201,20 +232,63 @@ This processes:
 <a id="dataset"></a>
 ## 💾 Dataset
 
+### Dataset Access
+
+**🤗 Hugging Face Dataset**: [FutureMa/DramaBench](https://huggingface.co/datasets/FutureMa/DramaBench)
+
+**Current Release: v1.0 (100 samples)** - Available Now!
+
+### Quick Start
+
+**Load with Datasets Library:**
+```python
+from datasets import load_dataset
+
+# Load the dataset
+dataset = load_dataset("FutureMa/DramaBench", split="train")
+
+# Access a sample
+sample = dataset[0]
+print(f"Title: {sample['title']}")
+print(f"Context: {sample['context'][:200]}...")
+print(f"Continuation: {sample['continuation'][:200]}...")
+print(f"Stats: {sample['stats']}")
+```
+
+**Analyze Dataset:**
+```bash
+cd DramaBench
+python scripts/load_dataset.py
+```
+
 ### Dataset Overview
 
-**Coming Soon**: The DramaBench dataset will be released publicly.
+**Current Release (v1.0 - 100 samples):**
+- 100 high-quality drama scripts with context-continuation pairs
+- Average context length: ~1,601 characters (~400 tokens)
+- Average continuation length: ~1,600 characters (~400 tokens)
+- Split types: 73% scene boundary, 27% middle
+- Format: Fountain screenplay format (industry standard)
+- Fields: `id`, `title`, `description`, `context`, `continuation`, `stats`
 
-**Planned Contents:**
-- 1,103 drama script contexts
-- Model-generated continuations (8 models)
+**Release Roadmap:**
+| Version | Samples | Status | Release Date |
+|---------|---------|--------|--------------|
+| **v1.0** | **100** | **✅ Available** | **2025-12-23** |
+| v2.0 | 500 | 🔄 Coming Soon | Q1 2026 |
+| v3.0 (Full) | 1,103 | 📋 Planned | Q2 2026 |
+
+**Full Benchmark (v3.0 - Planned):**
+- 1,103 complete drama scripts
+- Model-generated continuations from 8 SOTA models
 - Human annotations and quality assessments
-- Multi-dimensional evaluation metrics
-- Error taxonomy classifications
+- Multi-dimensional evaluation metrics (8,824 evaluations)
+- Error taxonomy and classification
+- Statistical significance test results
 
 **Format:** JSONL with structured metadata
 
-**License:** To be determined
+**License:** MIT License
 
 ---
 
