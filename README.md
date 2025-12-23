@@ -8,7 +8,7 @@
 
 [![Status](https://img.shields.io/badge/Status-Active-brightgreen)]()
 [![License](https://img.shields.io/badge/License-MIT-blue)]()
-[![Paper](https://img.shields.io/badge/Paper-Coming%20Soon-orange)]()
+[![Paper](https://img.shields.io/badge/Paper-arXiv-red)](https://arxiv.org/abs/2512.19012)
 
 [🌐 Web Demo](https://dramabench.pages.dev/) • [📊 Leaderboard](#leaderboard) • [📖 Documentation](#documentation) • [💾 Dataset](#dataset)
 
@@ -32,6 +32,7 @@
 
 ---
 
+<a id="overview"></a>
 ## 🎯 Overview
 
 **DramaBench** is a comprehensive benchmark for evaluating drama script continuation capabilities of large language models. It provides:
@@ -64,6 +65,7 @@
 
 ---
 
+<a id="quick-start"></a>
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -105,6 +107,7 @@ Due to browser CORS restrictions, you **must** use a local HTTP server to view t
 
 ---
 
+<a id="project-components"></a>
 ## 🧩 Project Components
 
 ### 1. Web Demo
@@ -147,6 +150,7 @@ An interactive, Apple-inspired web interface for exploring evaluation results.
 
 ---
 
+<a id="web-demo"></a>
 ## 🌐 Web Demo
 
 ### Features
@@ -194,6 +198,7 @@ This processes:
 
 ---
 
+<a id="dataset"></a>
 ## 💾 Dataset
 
 ### Dataset Overview
@@ -213,6 +218,7 @@ This processes:
 
 ---
 
+<a id="evaluation-framework"></a>
 ## 📊 Evaluation Framework
 
 ### Methodology
@@ -260,6 +266,7 @@ DramaBench uses a **hybrid evaluation system**:
 
 ---
 
+<a id="leaderboard"></a>
 ## 🏆 Leaderboard
 
 ### Top 8 Models Evaluated
@@ -279,6 +286,7 @@ DramaBench uses a **hybrid evaluation system**:
 
 ---
 
+<a id="documentation"></a>
 ## 📚 Documentation
 
 ### Project Structure
@@ -328,6 +336,7 @@ Tested and optimized for:
 
 ---
 
+<a id="contributing"></a>
 ## 🤝 Contributing
 
 We welcome contributions to DramaBench! Areas for contribution:
@@ -349,21 +358,26 @@ We welcome contributions to DramaBench! Areas for contribution:
 
 ---
 
+<a id="citation"></a>
 ## 📖 Citation
 
-**Paper coming soon**. If you use DramaBench in your research, please cite:
+If you use DramaBench in your research, please cite our paper:
 
 ```bibtex
-@article{dramabench2026,
+@misc{ma2025dramabenchsixdimensionalevaluationframework,
   title={DramaBench: A Six-Dimensional Evaluation Framework for Drama Script Continuation},
-  author={[Authors]},
-  journal={[Venue]},
-  year={2026}
+  author={Shijian Ma and Yunqi Huang and Yan Lin},
+  year={2025},
+  eprint={2512.19012},
+  archivePrefix={arXiv},
+  primaryClass={cs.CL},
+  url={https://arxiv.org/abs/2512.19012}
 }
 ```
 
 ---
 
+<a id="license"></a>
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
