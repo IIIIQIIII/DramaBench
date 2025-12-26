@@ -3,8 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="DramaBench - A Six-Dimensional Evaluation Framework for Drama Script Continuation">
+    <meta name="description" content="DramaBench: A comprehensive six-dimensional evaluation framework for drama script continuation. Evaluate LLMs across format standards, narrative efficiency, character consistency, emotional depth, logic consistency, and conflict handling.">
+    <meta name="keywords" content="drama script, screenplay evaluation, LLM benchmark, script continuation, narrative AI, creative writing AI, NLP benchmark, drama generation, script writing, AI evaluation">
+    <meta name="author" content="DramaBench Team - Shijian Ma, Yunqi Huang, Yan Lin">
+    <meta name="theme-color" content="#0071e3">
     <title>DramaBench - Drama Script Evaluation Benchmark</title>
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://dramabench.pages.dev/">
+
+    <!-- Open Graph / Facebook / LinkedIn -->
+    <meta property="og:title" content="DramaBench - Six-Dimensional Drama Script Evaluation Framework">
+    <meta property="og:description" content="Comprehensive benchmark for evaluating drama script continuation across 6 independent dimensions. 1,103 scripts, 8 SOTA models, rigorous validation.">
+    <meta property="og:image" content="https://dramabench.pages.dev/assets/DramaBench_cover.png">
+    <meta property="og:url" content="https://dramabench.pages.dev/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="DramaBench">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@mashijiann">
+    <meta name="twitter:creator" content="@mashijiann">
+    <meta name="twitter:title" content="DramaBench - Six-Dimensional Drama Script Evaluation Framework">
+    <meta name="twitter:description" content="Comprehensive benchmark for evaluating drama script continuation across 6 independent dimensions. 1,103 scripts, 8 SOTA models, rigorous validation.">
+    <meta name="twitter:image" content="https://dramabench.pages.dev/assets/DramaBench_cover.png">
+
+    <!-- Academic/Research Meta Tags -->
+    <meta name="citation_title" content="DramaBench: A Six-Dimensional Evaluation Framework for Drama Script Continuation">
+    <meta name="citation_author" content="Ma, Shijian">
+    <meta name="citation_author" content="Huang, Yunqi">
+    <meta name="citation_author" content="Lin, Yan">
+    <meta name="citation_publication_date" content="2025">
+    <meta name="citation_arxiv_id" content="2512.19012">
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -109,7 +139,61 @@
         .btn-light:hover {
             background-color: var(--apple-gray-2);
         }
+
+        /* Hero secondary buttons with float effect */
+        .btn-hero-secondary {
+            transition: all 0.3s ease;
+        }
+
+        .btn-hero-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 255, 255, 0.3);
+        }
     </style>
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "DramaBench",
+      "description": "A Six-Dimensional Evaluation Framework for Drama Script Continuation",
+      "url": "https://dramabench.pages.dev/",
+      "author": {
+        "@type": "Organization",
+        "name": "DramaBench Team"
+      },
+      "about": {
+        "@type": "ScholarlyArticle",
+        "name": "DramaBench: A Six-Dimensional Evaluation Framework for Drama Script Continuation",
+        "author": [
+          {
+            "@type": "Person",
+            "name": "Shijian Ma",
+            "url": "https://x.com/mashijiann"
+          },
+          {
+            "@type": "Person",
+            "name": "Yunqi Huang"
+          },
+          {
+            "@type": "Person",
+            "name": "Yan Lin"
+          }
+        ],
+        "url": "https://arxiv.org/abs/2512.19012",
+        "identifier": "arXiv:2512.19012",
+        "datePublished": "2025"
+      },
+      "dataset": {
+        "@type": "Dataset",
+        "name": "DramaBench Dataset",
+        "description": "1,103 drama scripts with multi-dimensional evaluations across 8 state-of-the-art language models",
+        "url": "https://huggingface.co/datasets/FutureMa/DramaBench",
+        "license": "https://opensource.org/licenses/MIT"
+      }
+    }
+    </script>
 </head>
 <body>
     <!-- Navigation -->
@@ -120,6 +204,8 @@
                 <li><a href="index.html">Home</a></li>
                 <li><a href="web/leaderboard.html">Leaderboard</a></li>
                 <li><a href="web/cases.html">Case Studies</a></li>
+                <li><a href="https://arxiv.org/abs/2512.19012" target="_blank">Paper</a></li>
+                <li><a href="https://huggingface.co/datasets/FutureMa/DramaBench" target="_blank">Dataset</a></li>
                 <li><a href="https://github.com/IIIIQIIII/DramaBench" target="_blank">GitHub</a></li>
             </ul>
         </div>
@@ -151,8 +237,10 @@
             </div>
 
             <div class="cta-buttons mt-5">
-                <a href="web/leaderboard.html" class="btn btn-primary">View Leaderboard</a>
-                <a href="web/cases.html" class="btn btn-secondary" style="background: rgba(255,255,255,0.2); border-color: white; color: white;">Explore Cases</a>
+                <a href="https://arxiv.org/abs/2512.19012" target="_blank" class="btn btn-primary">📄 Read Paper</a>
+                <a href="https://huggingface.co/datasets/FutureMa/DramaBench" target="_blank" class="btn btn-primary">📊 Get Dataset</a>
+                <a href="web/leaderboard.html" class="btn btn-secondary btn-hero-secondary" style="background: rgba(255,255,255,0.2); border-color: white; color: white;">View Leaderboard</a>
+                <a href="web/cases.html" class="btn btn-secondary btn-hero-secondary" style="background: rgba(255,255,255,0.2); border-color: white; color: white;">Explore Cases</a>
             </div>
         </div>
     </section>
@@ -364,12 +452,44 @@
     <section class="cta-section">
         <div class="container">
             <h2>Ready to Explore?</h2>
-            <p>View detailed model rankings, explore case studies, and access the complete dataset</p>
+            <p>Read our paper, download the dataset, view model rankings, and explore case studies</p>
 
             <div class="cta-buttons">
+                <a href="https://arxiv.org/abs/2512.19012" class="btn btn-light" target="_blank">📄 Read Paper</a>
+                <a href="https://huggingface.co/datasets/FutureMa/DramaBench" class="btn btn-light" target="_blank">📊 Get Dataset</a>
                 <a href="web/leaderboard.html" class="btn btn-light">View Leaderboard</a>
                 <a href="web/cases.html" class="btn btn-light">Case Studies</a>
                 <a href="https://github.com/IIIIQIIII/DramaBench" class="btn btn-light" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Citation Section -->
+    <section style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%); color: var(--apple-white); padding: var(--spacing-3xl) var(--spacing-md);">
+        <div class="container">
+            <h2 style="text-align: center; color: var(--apple-white); margin-bottom: var(--spacing-md);">📖 Citation</h2>
+            <p style="text-align: center; color: rgba(255, 255, 255, 0.8); margin-bottom: var(--spacing-lg);">
+                If you use DramaBench in your research, please cite our paper:
+            </p>
+
+            <div style="max-width: 800px; margin: 0 auto; position: relative;">
+                <pre id="bibtex-citation" style="background-color: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: var(--border-radius-lg); padding: var(--spacing-md); color: #f8f8f2; font-family: 'Courier New', Courier, monospace; font-size: 14px; line-height: 1.6; overflow-x: auto; white-space: pre;">@misc{ma2025dramabenchsixdimensionalevaluationframework,
+  title={DramaBench: A Six-Dimensional Evaluation Framework for Drama Script Continuation},
+  author={Shijian Ma and Yunqi Huang and Yan Lin},
+  year={2025},
+  eprint={2512.19012},
+  archivePrefix={arXiv},
+  primaryClass={cs.CL},
+  url={https://arxiv.org/abs/2512.19012}
+}</pre>
+
+                <button id="copy-citation-btn" onclick="copyCitation()" style="display: block; margin: var(--spacing-md) auto 0; padding: 12px 24px; background-color: var(--apple-blue); color: var(--apple-white); border: none; border-radius: var(--border-radius-xl); font-size: var(--font-size-base); font-weight: 500; cursor: pointer; transition: all var(--transition-fast); font-family: var(--font-family);">
+                    📋 Copy BibTeX
+                </button>
+
+                <p id="copy-feedback" style="text-align: center; margin-top: var(--spacing-sm); color: var(--apple-green); font-size: var(--font-size-sm); opacity: 0; transition: opacity 0.3s ease;">
+                    ✓ Copied to clipboard!
+                </p>
             </div>
         </div>
     </section>
@@ -382,6 +502,38 @@
     </footer>
 
     <script>
+        // Copy citation to clipboard
+        function copyCitation() {
+            const citationText = document.getElementById('bibtex-citation').textContent;
+            const copyBtn = document.getElementById('copy-citation-btn');
+            const feedback = document.getElementById('copy-feedback');
+
+            // Copy to clipboard
+            navigator.clipboard.writeText(citationText).then(() => {
+                // Show success feedback
+                feedback.style.opacity = '1';
+                copyBtn.textContent = '✓ Copied!';
+                copyBtn.style.backgroundColor = 'var(--apple-green)';
+
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    feedback.style.opacity = '0';
+                    copyBtn.textContent = '📋 Copy BibTeX';
+                    copyBtn.style.backgroundColor = 'var(--apple-blue)';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy citation:', err);
+                feedback.textContent = '✗ Failed to copy';
+                feedback.style.color = 'var(--apple-red)';
+                feedback.style.opacity = '1';
+                setTimeout(() => {
+                    feedback.style.opacity = '0';
+                    feedback.textContent = '✓ Copied to clipboard!';
+                    feedback.style.color = 'var(--apple-green)';
+                }, 2000);
+            });
+        }
+
         // Simple fade-in animation on scroll
         const observerOptions = {
             threshold: 0.1,

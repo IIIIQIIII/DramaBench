@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://dramabench.pages.dev/sitemap.xml
+
+# Crawl-delay (optional, can be adjusted)
+Crawl-delay: 1
