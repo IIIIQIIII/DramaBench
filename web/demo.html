@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interactive demo - Try DramaBench script continuation with multiple LLM models">
+    <title>Interactive Demo - DramaBench</title>
+    <link rel="stylesheet" href="css/apple-style.css">
+    <style>
+        /* Demo-specific styles that extend apple-style.css */
+        .demo-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-lg);
+        }
+
+        .demo-section {
+            background: var(--apple-white);
+            border-radius: var(--border-radius-lg);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+            box-shadow: var(--shadow-md);
+        }
+
+        .demo-section h2 {
+            margin-bottom: var(--spacing-md);
+            font-size: var(--font-size-2xl);
+            font-weight: 600;
+        }
+
+        /* API Key Input */
+        .api-key-group {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-sm);
+            flex-wrap: wrap;
+        }
+
+        .api-key-input {
+            flex: 1;
+            min-width: 300px;
+            padding: 12px 16px;
+            border: 2px solid var(--apple-gray-3);
+            border-radius: var(--border-radius-sm);
+            font-size: var(--font-size-base);
+            font-family: var(--font-family);
+            transition: border-color var(--transition-fast);
+        }
+
+        .api-key-input:focus {
+            outline: none;
+            border-color: var(--apple-blue);
+        }
+
+        .help-text {
+            color: var(--apple-gray-5);
+            font-size: var(--font-size-sm);
+            margin-top: var(--spacing-xs);
+        }
+
+        .help-text a {
+            color: var(--apple-blue);
+            text-decoration: none;
+        }
+
+        .help-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* Status Messages */
+        .status-msg {
+            padding: 12px 16px;
+            border-radius: var(--border-radius-sm);
+            margin-top: var(--spacing-sm);
+            font-size: var(--font-size-sm);
+            display: none;
+        }
+
+        .status-msg.success {
+            background-color: #d1fae5;
+            color: #065f46;
+            border: 1px solid var(--apple-green);
+            display: block;
+        }
+
+        .status-msg.error {
+            background-color: #fee2e2;
+            color: #991b1b;
+            border: 1px solid var(--apple-red);
+            display: block;
+        }
+
+        .status-msg.info {
+            background-color: #dbeafe;
+            color: #1e40af;
+            border: 1px solid var(--apple-blue);
+            display: block;
+        }
+
+        .status-msg.loading {
+            background-color: #fef3c7;
+            color: #92400e;
+            border: 1px solid var(--apple-orange);
+            display: block;
+        }
+
+        /* Script Controls */
+        .script-controls {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+            flex-wrap: wrap;
+        }
+
+        .script-select {
+            flex: 1;
+            min-width: 300px;
+            padding: 12px 16px;
+            border: 2px solid var(--apple-gray-3);
+            border-radius: var(--border-radius-sm);
+            font-size: var(--font-size-base);
+            font-family: var(--font-family);
+            background-color: var(--apple-white);
+            cursor: pointer;
+        }
+
+        .script-info-box {
+            background-color: var(--apple-gray-1);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius-md);
+            margin-top: var(--spacing-md);
+        }
+
+        .script-info-box h3 {
+            font-size: var(--font-size-xl);
+            margin-bottom: var(--spacing-xs);
+            color: var(--apple-black);
+        }
+
+        .script-info-box p {
+            color: var(--apple-gray-5);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .script-stats {
+            display: flex;
+            gap: var(--spacing-sm);
+            flex-wrap: wrap;
+            font-size: var(--font-size-sm);
+        }
+
+        .script-stats span {
+            background-color: var(--apple-white);
+            padding: 6px 12px;
+            border-radius: var(--border-radius-sm);
+            border: 1px solid var(--apple-gray-3);
+        }
+
+        /* Model Selection */
+        .model-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .model-option {
+            display: flex;
+            align-items: center;
+            padding: 16px 20px;
+            border: 2px solid var(--apple-gray-3);
+            border-radius: var(--border-radius-md);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            background-color: var(--apple-white);
+        }
+
+        .model-option:hover {
+            border-color: var(--apple-blue);
+            background-color: var(--apple-gray-1);
+        }
+
+        .model-option input[type="radio"] {
+            margin-right: var(--spacing-xs);
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .model-option input[type="radio"]:checked + .model-label {
+            color: var(--apple-blue);
+            font-weight: 600;
+        }
+
+        /* Script Content Display */
+        .script-content {
+            background-color: var(--apple-black);
+            color: var(--apple-gray-1);
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-md);
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.8;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .placeholder-text {
+            color: var(--apple-gray-5);
+            font-style: italic;
+            text-align: center;
+            padding: var(--spacing-2xl);
+        }
+
+        /* Results Toggle */
+        .results-toggle {
+            display: flex;
+            gap: var(--spacing-xs);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .toggle-btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: 2px solid var(--apple-gray-3);
+            border-radius: var(--border-radius-sm);
+            background-color: var(--apple-white);
+            color: var(--apple-gray-5);
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+
+        .toggle-btn:hover {
+            border-color: var(--apple-blue);
+        }
+
+        .toggle-btn.active {
+            background-color: var(--apple-blue);
+            color: var(--apple-white);
+            border-color: var(--apple-blue);
+        }
+
+        /* Comparison View */
+        .comparison-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-md);
+        }
+
+        .comparison-column h3 {
+            margin-bottom: var(--spacing-sm);
+        }
+
+        @media (max-width: 1024px) {
+            .comparison-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .demo-container {
+                padding: var(--spacing-sm);
+            }
+
+            .api-key-group,
+            .script-controls {
+                flex-direction: column;
+            }
+
+            .model-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div class="navbar-logo">DramaBench</div>
+            <ul class="navbar-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="leaderboard.html">Leaderboard</a></li>
+                <li><a href="cases.html">Case Studies</a></li>
+                <li><a href="demo.html" class="active">Demo</a></li>
+                <li><a href="https://arxiv.org/abs/2512.19012" target="_blank">Paper</a></li>
+                <li><a href="https://huggingface.co/datasets/FutureMa/DramaBench" target="_blank">Dataset</a></li>
+                <li><a href="https://github.com/IIIIQIIII/DramaBench" target="_blank">GitHub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="demo-container">
+        <!-- Header -->
+        <div style="text-align: center; padding: var(--spacing-2xl) 0;">
+            <h1 style="font-size: var(--font-size-4xl); margin-bottom: var(--spacing-sm);">🎭 Interactive Demo</h1>
+            <p style="font-size: var(--font-size-lg); color: var(--apple-gray-5);">
+                Try drama script continuation with state-of-the-art language models
+            </p>
+        </div>
+
+        <!-- API Key Configuration -->
+        <section id="api-section" class="demo-section">
+            <h2>🔑 API Configuration</h2>
+            <div class="api-key-group">
+                <input type="password" id="api-key-input" class="api-key-input"
+                       placeholder="Enter your OpenRouter API key (sk-or-v1-...)" autocomplete="off">
+                <button onclick="saveApiKey()" class="btn btn-primary">Save Key</button>
+                <button onclick="clearApiKey()" class="btn btn-secondary">Clear</button>
+            </div>
+            <p class="help-text">
+                Get your API key from <a href="https://openrouter.ai/keys" target="_blank">OpenRouter</a>.
+                Your key is stored locally in your browser.
+            </p>
+            <div id="api-status" class="status-msg"></div>
+        </section>
+
+        <!-- Main Demo Content -->
+        <div id="main-demo" style="display: none;">
+            <!-- Script Selection -->
+            <section class="demo-section">
+                <h2>📜 Script Selection</h2>
+                <div class="script-controls">
+                    <select id="script-select" class="script-select" onchange="selectScript(this.value)">
+                        <option value="">Loading scripts...</option>
+                    </select>
+                    <button onclick="selectRandomScript()" class="btn btn-secondary">🎲 Random Script</button>
+                </div>
+
+                <div id="script-info" class="script-info-box">
+                    <h3>Select a script to begin</h3>
+                    <p></p>
+                    <div id="script-stats" class="script-stats"></div>
+                </div>
+            </section>
+
+            <!-- Model Selection -->
+            <section class="demo-section">
+                <h2>🤖 Model Selection</h2>
+                <div class="model-grid">
+                    <label class="model-option">
+                        <input type="radio" name="model" value="openai/gpt-5.2" checked>
+                        <span class="model-label">GPT-5.2</span>
+                    </label>
+                    <label class="model-option">
+                        <input type="radio" name="model" value="google/gemini-3-flash-preview">
+                        <span class="model-label">Gemini 3 Flash</span>
+                    </label>
+                    <label class="model-option">
+                        <input type="radio" name="model" value="z-ai/glm-4.7">
+                        <span class="model-label">GLM-4.7</span>
+                    </label>
+                    <label class="model-option">
+                        <input type="radio" name="model" value="minimax/minimax-m2.1">
+                        <span class="model-label">MiniMax M2.1</span>
+                    </label>
+                </div>
+
+                <button onclick="generateContinuation()" id="generate-btn" class="btn btn-primary"
+                        style="width: 100%; padding: 16px;" disabled>
+                    ✨ Generate Continuation
+                </button>
+                <div id="gen-status" class="status-msg"></div>
+            </section>
+
+            <!-- Context Display -->
+            <section class="demo-section">
+                <h2>📖 Script Context (Input)</h2>
+                <div id="context-display" class="script-content">
+                    <p class="placeholder-text">Select a script to view context...</p>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section id="results-section" class="demo-section" style="display: none;">
+                <h2>🎬 Generated Continuation vs Ground Truth</h2>
+
+                <div class="results-toggle">
+                    <button id="show-gen-btn" class="toggle-btn active" onclick="showGenerated()">AI Generated</button>
+                    <button id="show-gt-btn" class="toggle-btn" onclick="showGroundTruth()">Ground Truth</button>
+                    <button id="show-comp-btn" class="toggle-btn" onclick="showComparison()">Side-by-Side</button>
+                </div>
+
+                <!-- Generated Result -->
+                <div id="gen-result">
+                    <h3>Generated by <span id="model-name" style="color: var(--apple-blue);"></span></h3>
+                    <div id="gen-content" class="script-content" style="margin-top: var(--spacing-sm);"></div>
+                </div>
+
+                <!-- Ground Truth -->
+                <div id="gt-result" style="display: none;">
+                    <h3>Ground Truth (Original Script)</h3>
+                    <div id="gt-content" class="script-content" style="margin-top: var(--spacing-sm);"></div>
+                </div>
+
+                <!-- Comparison -->
+                <div id="comp-view" class="comparison-container" style="display: none;">
+                    <div class="comparison-column">
+                        <h3>AI Generated</h3>
+                        <div id="comp-gen" class="script-content"></div>
+                    </div>
+                    <div class="comparison-column">
+                        <h3>Ground Truth</h3>
+                        <div id="comp-gt" class="script-content"></div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="scripts/demo.js"></script>
+</body>
+</html>

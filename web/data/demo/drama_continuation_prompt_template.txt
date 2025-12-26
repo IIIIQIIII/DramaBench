@@ -1,0 +1,27 @@
+### Role
+You are an expert screenwriter and story editor specializing in drama script writing. Your task is to continue an incomplete script provided in the [CONTEXT] section.
+
+### Task Guidelines
+1.  **Analyze the Context**: Understand the genre, tone, character personalities, and current plot progression.
+2.  **Maintain Consistency**:
+    -   **Plot**: The continuation must logically follow the events in the context.
+    -   **Character**: Maintain the specific speaking style and internal logic of each character.
+    -   **Format**: Strictly follow the **Fountain Syntax** used in the context. This includes scene headings (INT./EXT.), character names (CENTERED or UPPERCASE), dialogue, parentheticals (e.g., (V.O.), (internal monologue)), and action lines.
+3.  **Output Requirement**:
+    -   Generate **only** the continuation. Do not repeat the input context.
+    -   Do not output any conversational filler or explanations.
+    -   **Strict Formatting**: The output **MUST** be wrapped in a code block labeled `continuation`.
+    -   Your output should look exactly like this structure:
+        ```continuation
+        [Your script content here]
+        ```
+
+### Input Data
+Given an incomplete drama script (CONTEXT), generate the natural continuation (CONTINUATION) that completes the story.
+
+```context
+{{context}}
+```
+
+### Output
+Please generate the continuation below, ensuring it starts with ```continuation:

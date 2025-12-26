@@ -10,7 +10,7 @@
 [![License](https://img.shields.io/badge/License-MIT-blue)]()
 [![Paper](https://img.shields.io/badge/Paper-arXiv-red)](https://arxiv.org/abs/2512.19012)
 
-[🌐 Web Demo](https://dramabench.pages.dev/) • [📊 Leaderboard](#leaderboard) • [📖 Documentation](#documentation) • [🤗 Dataset](https://huggingface.co/datasets/FutureMa/DramaBench)
+[🌐 Website](https://dramabench.pages.dev/) • [✨ Interactive Demo](https://dramabench.pages.dev/web/demo.html) • [📊 Leaderboard](https://dramabench.pages.dev/web/leaderboard.html) • [🤗 Dataset](https://huggingface.co/datasets/FutureMa/DramaBench)
 
 </div>
 
@@ -39,7 +39,8 @@
 
 ### Core Components
 
-- 🌐 **Interactive Web Demo** - Explore model performance and case studies
+- 🌐 **Project Website** - Interactive showcase with evaluation results and case studies
+- ✨ **Interactive Demo** - Try script continuation with multiple LLM models (user-provided API key)
 - 💾 **Large-Scale Dataset** - 1,103 drama scripts with human annotations
 - 📊 **Evaluation Framework** - 6 independent dimensions with rigorous metrics
 - 🏆 **Model Leaderboard** - Compare 8 SOTA language models
@@ -110,23 +111,32 @@ Due to browser CORS restrictions, you **must** use a local HTTP server to view t
 <a id="project-components"></a>
 ## 🧩 Project Components
 
-### 1. Web Demo
+### 1. Project Website & Interactive Demo
 
-An interactive, Apple-inspired web interface for exploring evaluation results.
+An interactive, Apple-inspired web interface for exploring evaluation results and trying script continuation.
 
-**Features:**
+**Website Features:**
 - 📊 Interactive leaderboard with dimension filters
 - 📝 Case studies explorer with 24 examples
 - 🎨 Premium dark gradient design
 - 📱 Fully responsive (mobile/tablet/desktop)
 - ⚡ Pure HTML/CSS/JavaScript (no frameworks)
 
+**Interactive Demo Features:**
+- ✨ Try script continuation with 4 SOTA models (GPT-5.2, Gemini 3, GLM-4.7, MiniMax M2.1)
+- 🔑 User-provided OpenRouter API key (stored locally)
+- 📜 100 drama scripts from DramaBench dataset
+- 🎭 Official prompt template for generation
+- 📊 Compare AI-generated vs ground truth continuations
+- 🎨 Matching Apple-style design
+
 **Pages:**
 - `index.html` - Main landing page
 - `web/leaderboard.html` - Model rankings
 - `web/cases.html` - Case studies browser
+- `web/demo.html` - Interactive script continuation demo
 
-[→ View Web Demo Documentation](#web-demo)
+[→ View Live Website](https://dramabench.pages.dev/) | [→ Try Interactive Demo](https://dramabench.pages.dev/web/demo.html)
 
 ### 2. Dataset
 
@@ -182,9 +192,41 @@ print(sample['continuation'])
 ---
 
 <a id="web-demo"></a>
-## 🌐 Web Demo
+## 🌐 Website & Interactive Demo
 
-### Features
+### Live Website
+
+Visit [dramabench.pages.dev](https://dramabench.pages.dev) to explore:
+
+- **Homepage** - Project overview and statistics
+- **Leaderboard** - Compare 8 SOTA models across 6 dimensions
+- **Case Studies** - Browse 24 curated examples with detailed analysis
+- **Interactive Demo** - Try script continuation yourself
+
+### Interactive Demo
+
+**Try it now:** [dramabench.pages.dev/web/demo.html](https://dramabench.pages.dev/web/demo.html)
+
+Experience drama script continuation with state-of-the-art language models:
+
+**Features:**
+- 🎭 **100 Drama Scripts** - Select from DramaBench v1.0 dataset
+- 🤖 **4 SOTA Models** - GPT-5.2, Gemini 3 Flash, GLM-4.7, MiniMax M2.1
+- 🔑 **Your API Key** - Uses OpenRouter API (bring your own key)
+- 📊 **Compare Results** - View AI-generated vs ground truth side-by-side
+- 🎨 **Apple Design** - Beautiful, responsive interface
+
+**How to Use:**
+1. Get your free API key from [OpenRouter](https://openrouter.ai/keys)
+2. Visit the [demo page](https://dramabench.pages.dev/web/demo.html)
+3. Enter your API key (stored locally in your browser)
+4. Select a script from 100 options
+5. Choose your preferred model
+6. Generate and compare continuations
+
+**Cost:** Pay-as-you-go through OpenRouter (typically $0.01-0.10 per generation)
+
+### Website Features
 
 **Interactive Leaderboard**
 - Filter by dimension (overall + 6 dimensions)
@@ -213,7 +255,7 @@ print(sample['continuation'])
 - Backdrop filters for glassmorphism
 - CSS animations for smooth transitions
 
-### Data Processing
+### Local Development
 
 Regenerate web demo data from source:
 
@@ -372,17 +414,22 @@ DramaBench/
 ├── start_demo.sh                 # One-click demo launcher
 ├── assets/
 │   └── DramaBench_cover.png     # Project cover image
-├── web/                          # Web demo
+├── web/                          # Web application
 │   ├── leaderboard.html         # Model rankings page
 │   ├── cases.html               # Case studies page
+│   ├── demo.html                # Interactive script continuation demo
 │   ├── css/
 │   │   └── apple-style.css      # Apple-inspired CSS framework
-│   ├── data/                    # Processed JSON data
+│   ├── data/                    # Data files
 │   │   ├── leaderboard.json     # Model rankings (14KB)
 │   │   ├── case_studies.json    # 24 case studies (262KB)
-│   │   └── statistics.json      # Overall statistics (3KB)
+│   │   ├── statistics.json      # Overall statistics (3KB)
+│   │   └── demo/                # Demo-specific data
+│   │       ├── dramabench_continuation_100.jsonl  # 100 scripts dataset
+│   │       └── drama_continuation_prompt_template.txt  # Official prompt
 │   └── scripts/
-│       └── process_data.py      # Data processing script
+│       ├── process_data.py      # Data processing script
+│       └── demo.js              # Interactive demo logic
 ├── dataset/                      # [Coming Soon] Dataset files
 ├── evaluation/                   # [Coming Soon] Evaluation code
 └── docs/                         # [Coming Soon] Additional documentation
