@@ -45,6 +45,7 @@
 - 📊 **Evaluation Framework** - 6 independent dimensions with rigorous metrics
 - 🏆 **Model Leaderboard** - Compare 8 SOTA language models
 - 📝 **Case Studies** - 24 curated examples with detailed analysis
+- 🔧 **Evaluation Prompts** - LLM-based labeling templates for all 6 dimensions
 
 ### Six Evaluation Dimensions
 
@@ -179,15 +180,43 @@ print(sample['continuation'])
 - Multi-dimensional evaluation metrics
 - Error taxonomy and classification
 
-### 3. Evaluation Code
+### 3. Evaluation Prompts
+
+**✅ Now Available**: LLM-based evaluation prompt templates for all 6 dimensions.
+
+**Location**: `prompts/` directory
+
+**Contents**:
+- `narrative_efficiency_prompt.txt` - Story progression effectiveness
+- `character_consistency_prompt.txt` - Character voice and behavior consistency
+- `emotional_depth_prompt.txt` - Emotional arc development
+- `logic_consistency_prompt.txt` - Factual coherence and continuity
+- `conflict_handling_prompt.txt` - Conflict development and resolution
+- `dialogue_quality_prompt.txt` - Dialogue naturalness and purpose
+
+**Quick Start**:
+```python
+# Load a prompt template
+with open('prompts/narrative_efficiency_prompt.txt', 'r') as f:
+    prompt = f.read()
+
+# Fill placeholders
+prompt = prompt.replace('{CONTEXT}', script_context)
+prompt = prompt.replace('{CONTINUATION}', generated_continuation)
+prompt = prompt.replace('{MODEL}', 'GPT-4')
+prompt = prompt.replace('{SCRIPT_ID}', 'script_001')
+
+# Send to LLM and get structured JSON output
+response = llm_api_call(prompt)
+evaluation = json.loads(response)
+```
+
+See `prompts/README.md` for detailed usage instructions.
 
 **Coming Soon**: Full evaluation pipeline including:
-
-- Six-dimensional evaluation framework
-- LLM-based labeling prompts and scripts
-- Statistical analysis tools
-- Visualization generation
-- Reproducibility scripts
+- Statistical analysis scripts
+- Visualization generation tools
+- Reproducibility automation scripts
 
 ---
 
@@ -380,6 +409,50 @@ DramaBench uses a **hybrid evaluation system**:
 - Emotional Depth: κ=0.53 (Cohen's Kappa)
 - Conflict: κ=0.42 (Cohen's Kappa)
 
+### Using Evaluation Prompts
+
+**Available Now**: All LLM-based evaluation prompts are available in the `prompts/` directory.
+
+**Quick Start**:
+1. Navigate to `prompts/` folder
+2. Select a dimension template (e.g., `narrative_efficiency_prompt.txt`)
+3. Replace placeholders: `{CONTEXT}`, `{CONTINUATION}`, `{MODEL}`, `{SCRIPT_ID}`
+4. Send to your preferred LLM (Claude Sonnet 4.5, GPT-4, etc.)
+5. Parse the structured JSON response
+
+**Example**:
+```python
+import json
+
+# Load template
+with open('prompts/character_consistency_prompt.txt', 'r') as f:
+    template = f.read()
+
+# Fill with your data
+prompt = template.replace('{CONTEXT}', context_text)
+prompt = prompt.replace('{CONTINUATION}', continuation_text)
+prompt = prompt.replace('{MODEL}', 'GPT-4')
+prompt = prompt.replace('{SCRIPT_ID}', 'script_042')
+
+# Call LLM (example with OpenAI)
+response = openai.chat.completions.create(
+    model="gpt-4-turbo",
+    messages=[{"role": "user", "content": prompt}],
+    temperature=0.3
+)
+
+# Parse results
+results = json.loads(response.choices[0].message.content)
+print(f"OOC Rate: {results['statistics']['ooc_rate']}")
+```
+
+**Detailed Documentation**: See `prompts/README.md` for:
+- Detailed usage instructions
+- Batch evaluation examples
+- Output format specifications
+- Quality guidelines
+- Common issues and solutions
+
 ---
 
 <a id="leaderboard"></a>
@@ -414,6 +487,14 @@ DramaBench/
 ├── start_demo.sh                 # One-click demo launcher
 ├── assets/
 │   └── DramaBench_cover.png     # Project cover image
+├── prompts/                      # Evaluation prompt templates
+│   ├── README.md                # Prompts usage guide
+│   ├── narrative_efficiency_prompt.txt      # Narrative efficiency evaluation
+│   ├── character_consistency_prompt.txt     # Character consistency evaluation
+│   ├── emotional_depth_prompt.txt           # Emotional depth evaluation
+│   ├── logic_consistency_prompt.txt         # Logic consistency evaluation
+│   ├── conflict_handling_prompt.txt         # Conflict handling evaluation
+│   └── dialogue_quality_prompt.txt          # Dialogue quality evaluation
 ├── web/                          # Web application
 │   ├── leaderboard.html         # Model rankings page
 │   ├── cases.html               # Case studies page
@@ -525,7 +606,7 @@ For questions, feedback, or collaboration opportunities:
 
 <div align="center">
 
-**Last Updated**: 2025-12-20 • **Version**: 1.0.0 • **Status**: ✅ Active
+**Last Updated**: 2025-12-30 • **Version**: 1.0.0 • **Status**: ✅ Active
 
 Made with ❤️ by the DramaBench Team
 

@@ -1,0 +1,318 @@
+# Conflict Handling Analysis Prompt Template
+
+You are a professional script analyst specializing in dramatic conflict evaluation. Your task is to analyze how well drama script continuations develop and advance the established conflict.
+
+## Task Overview
+
+Given the **original script context** and a **generated continuation**, you will:
+1. Identify the central conflict from the context
+2. Classify how the continuation handles this conflict
+3. Provide structured analysis in JSON format
+
+## Instructions
+
+### Step 1: Identify the Central Conflict
+
+From the context, identify the PRIMARY dramatic conflict. Focus on:
+
+**Types of Conflict:**
+- **Interpersonal**: Character vs. Character (rivalry, betrayal, argument, power struggle)
+- **Internal**: Character vs. Self (moral dilemma, fear, guilt, identity crisis)
+- **Situational**: Character vs. Circumstance (obstacle, deadline, danger, secret to protect)
+- **Goal-Oriented**: Character wants something but faces opposition
+
+**What to Look For:**
+- The main tension driving the scene
+- What the protagonist wants vs. what prevents them from getting it
+- Established stakes or consequences
+- Unresolved questions or problems
+
+**State the conflict clearly:** "Character A wants X, but Y prevents them" or "Character A must do X, but faces obstacle Y"
+
+### Step 2: Classify Conflict Handling
+
+Determine how the continuation treats the identified conflict. Choose ONE classification:
+
+#### **ESCALATION** (Conflict Intensifies)
+The continuation raises the stakes, makes the situation worse, or increases tension:
+- New information makes the problem more severe
+- Characters become more entrenched in their positions
+- Consequences become more dire
+- Pressure increases, time runs out
+- Conflict spreads to affect more people
+
+**Examples:**
+- A hidden lie is discovered, making the betrayal worse
+- An argument escalates into physical confrontation
+- A deadline gets shorter or stakes get higher
+- A secret is about to be exposed to more people
+
+**Score Weight:** +2 (Excellent - drives drama forward)
+
+#### **TWIST** (New Obstacle or Direction)
+The continuation introduces a new complication, revelation, or unexpected development:
+- Surprising information changes the nature of the conflict
+- A third party intervenes, complicating matters
+- A new obstacle emerges
+- Character discovers they were wrong about something crucial
+- The goal or situation shifts unexpectedly
+
+**Examples:**
+- Character realizes they were betrayed by someone unexpected
+- A hidden ally is revealed to be an enemy (or vice versa)
+- New information reframes the entire conflict
+- An external event forces characters to adapt
+
+**Score Weight:** +2 (Excellent - adds complexity and surprise)
+
+#### **PAUSE** (Conflict Temporarily Suspended)
+The continuation delays or postpones the conflict without resolving it:
+- Characters agree to talk later / table the discussion
+- Conflict is interrupted by external event (phone call, new arrival)
+- Characters retreat to regroup
+- Temporary truce or ceasefire
+- Focus shifts but tension remains
+
+**Examples:**
+- "We'll discuss this later" - then scene ends
+- An interruption stops the argument mid-way
+- Characters separate to cool down, but issues remain
+- Conflict acknowledged but not addressed yet
+
+**Score Weight:** +1 (Acceptable - maintains tension but doesn't advance plot)
+
+#### **RESOLUTION** (Conflict Resolved)
+The continuation completely resolves the central conflict:
+- Characters reach agreement or understanding
+- Problem is solved or obstacle overcome
+- Protagonist achieves goal or accepts failure
+- All tension from the conflict dissipates
+
+**Note:** In short drama continuations, full resolution is often premature unless it's the final scene.
+
+**Examples:**
+- Characters apologize and reconcile fully
+- Mystery is solved, secret is revealed acceptably
+- Obstacle is removed, goal is achieved
+- Protagonist makes final decision that ends internal conflict
+
+**Score Weight:** 0 (Neutral - may be appropriate for endings, but often deflates ongoing tension)
+
+#### **DROPPED** (Conflict Forgotten/Ignored)
+The continuation completely ignores or abandons the established conflict:
+- Conflict is never mentioned or addressed
+- Characters act as if the conflict doesn't exist
+- Continuation focuses on unrelated matters
+- No logical reason given for conflict's absence
+
+**Examples:**
+- Context establishes a deadline, continuation never mentions it
+- Characters were in heated argument, continuation has them chatting casually
+- Critical secret or problem is simply forgotten
+- Stakes established in context are ignored
+
+**Score Weight:** -5 (Poor - breaks narrative continuity)
+
+### Step 3: Secondary Conflicts (Optional)
+
+If the continuation introduces or develops significant SECONDARY conflicts beyond the central one, note them briefly. However, your primary classification should focus on the central conflict.
+
+## Output Format
+
+Provide your analysis as a valid JSON object with NO additional text:
+
+```json
+{
+  "script_id": "script_XXXX",
+  "model": "model-name",
+  "central_conflict": {
+    "description": "One sentence describing the central conflict from context",
+    "type": "INTERPERSONAL|INTERNAL|SITUATIONAL|GOAL_ORIENTED",
+    "evidence": "Brief quote or description from context"
+  },
+  "conflict_handling": {
+    "classification": "ESCALATION|TWIST|PAUSE|RESOLUTION|DROPPED",
+    "evidence": "Brief quote or description from continuation",
+    "explanation": "One sentence explaining how the continuation handles the conflict",
+    "score_weight": 2,
+    "confidence": 0.90
+  },
+  "secondary_conflicts": [
+    {
+      "description": "Brief description of secondary conflict",
+      "handling": "ESCALATION|TWIST|PAUSE|RESOLUTION|DROPPED"
+    }
+  ]
+}
+```
+
+## Field Requirements
+
+- **script_id**: Copy from input
+- **model**: Copy from input
+- **central_conflict**: The main conflict from context
+  - **description**: One clear sentence stating the conflict
+  - **type**: Must be one of: INTERPERSONAL, INTERNAL, SITUATIONAL, GOAL_ORIENTED
+  - **evidence**: Short quote or description from context
+- **conflict_handling**: How continuation treats the conflict
+  - **classification**: Must be exactly one of: ESCALATION, TWIST, PAUSE, RESOLUTION, DROPPED
+  - **evidence**: Quote or description from continuation
+  - **explanation**: One sentence explaining your classification
+  - **score_weight**: Auto-assigned based on classification
+    - ESCALATION: 2
+    - TWIST: 2
+    - PAUSE: 1
+    - RESOLUTION: 0
+    - DROPPED: -5
+  - **confidence**: Float 0.0-1.0 indicating certainty
+    - 0.9-1.0: Very certain (clear evidence)
+    - 0.7-0.9: Confident (good evidence)
+    - 0.5-0.7: Moderate (some ambiguity)
+- **secondary_conflicts**: Array of additional conflicts (can be empty array)
+  - **description**: Brief description
+  - **handling**: Same classification options
+
+## Quality Guidelines
+
+**Good Practice:**
+- Focus on the MAIN conflict, not minor tensions
+- Base classification on actual text evidence
+- Consider whether the handling serves the story effectively
+- Remember that PAUSE isn't necessarily bad - it can build suspense
+- RESOLUTION can be appropriate if this is clearly meant to be an ending
+
+**Avoid:**
+- Being too harsh on PAUSE - some scenes need breathing room
+- Confusing character reactions with conflict handling (characters getting upset is different from conflict escalating)
+- Missing subtle escalations (small reveals can be powerful)
+- Classifying minor shifts as TWIST - save this for significant developments
+
+## Decision Framework
+
+**Is the conflict mentioned at all?**
+- No → DROPPED (-5)
+- Yes → Continue...
+
+**Did the situation get worse or more complicated?**
+- Yes, it intensified → ESCALATION (+2)
+- Yes, but in a new direction → TWIST (+2)
+- No → Continue...
+
+**Is the conflict fully resolved?**
+- Yes → RESOLUTION (0)
+- No → Continue...
+
+**Is the conflict postponed or interrupted?**
+- Yes → PAUSE (+1)
+
+## Examples
+
+### Example 1: Escalation
+
+**Central Conflict:** JOHN wants to hide his affair from his wife MARY.
+**Continuation:** MARY finds a hotel receipt in JOHN's pocket.
+
+```json
+{
+  "central_conflict": {
+    "description": "John attempts to hide his affair from Mary",
+    "type": "INTERPERSONAL",
+    "evidence": "John quickly hides his phone when Mary enters the room"
+  },
+  "conflict_handling": {
+    "classification": "ESCALATION",
+    "evidence": "Mary holds up a hotel receipt, her hand trembling",
+    "explanation": "The discovery of physical evidence escalates the conflict by making the lie harder to maintain",
+    "score_weight": 2,
+    "confidence": 0.95
+  }
+}
+```
+
+### Example 2: Twist
+
+**Central Conflict:** DETECTIVE tries to catch the killer.
+**Continuation:** DETECTIVE discovers their partner is the killer.
+
+```json
+{
+  "central_conflict": {
+    "description": "Detective investigates a series of murders to catch the killer",
+    "type": "GOAL_ORIENTED",
+    "evidence": "Detective reviews crime scene photos, determined to find a pattern"
+  },
+  "conflict_handling": {
+    "classification": "TWIST",
+    "evidence": "The detective's blood runs cold as they recognize their partner's watch in the security footage",
+    "explanation": "The revelation that the detective's trusted partner is the killer fundamentally changes the nature of the conflict",
+    "score_weight": 2,
+    "confidence": 0.93
+  }
+}
+```
+
+### Example 3: Pause
+
+**Central Conflict:** SIBLINGS argue over inheritance.
+**Continuation:** Mother calls them to dinner, they reluctantly stop arguing.
+
+```json
+{
+  "central_conflict": {
+    "description": "Siblings David and Emily argue over their father's will",
+    "type": "INTERPERSONAL",
+    "evidence": "DAVID: 'You were always his favorite!' EMILY: 'That's not fair!'"
+  },
+  "conflict_handling": {
+    "classification": "PAUSE",
+    "evidence": "MOTHER: 'Dinner's ready.' David and Emily exchange glares but follow her to the dining room",
+    "explanation": "The conflict is interrupted by the mother's intervention but remains unresolved",
+    "score_weight": 1,
+    "confidence": 0.88
+  }
+}
+```
+
+### Example 4: Dropped
+
+**Central Conflict:** Character must defuse a bomb in 5 minutes.
+**Continuation:** Character chats casually about vacation plans, no mention of bomb.
+
+```json
+{
+  "central_conflict": {
+    "description": "Agent must defuse a bomb before the five-minute timer expires",
+    "type": "SITUATIONAL",
+    "evidence": "Digital timer reads 04:47. Agent's hands shake as they examine the wires"
+  },
+  "conflict_handling": {
+    "classification": "DROPPED",
+    "evidence": "Agent relaxes against the wall, discussing summer vacation plans with their partner",
+    "explanation": "The urgent bomb situation is completely forgotten with no explanation",
+    "score_weight": -5,
+    "confidence": 0.97
+  }
+}
+```
+
+---
+
+## Your Task
+
+Analyze the following script continuation for conflict handling:
+
+```
+**CONTEXT:**
+{CONTEXT}
+```
+
+```
+**GENERATED CONTINUATION:**
+{CONTINUATION}
+```
+
+**MODEL:** {MODEL}
+
+**SCRIPT ID:** {SCRIPT_ID}
+
+Provide your complete analysis in the JSON format specified above.

@@ -1,0 +1,343 @@
+# Narrative Efficiency Analysis Prompt Template
+
+You are a professional script analyst specializing in narrative efficiency evaluation. Your task is to analyze drama script continuations to assess how effectively they advance the story and avoid narrative padding.
+
+## Task Overview
+
+Given the **original script context** and a **generated continuation**, you will:
+1. Extract story beats (narrative units) from the continuation
+2. Determine what world state changes each beat produces
+3. Classify each beat as Driver, Static, or Redundant
+4. Provide structured analysis in JSON format
+
+## Instructions
+
+### Step 1: Extract Story Beats from Continuation
+
+Identify discrete **narrative units** (story beats) from the continuation. Extract from BOTH:
+
+**Action Lines:**
+- Character movements and physical actions
+- Scene descriptions that advance the plot
+- Visual events that change the situation
+
+**Dialogue Lines:**
+- **Event-type speeches**: Threats, promises, revelations, deals, commands, confessions
+- Information exchanges that change what characters know
+- Dialogue that alters relationships or goals
+
+**What counts as a beat:**
+- A single action or speech act that could change the story world
+- Typically 1-2 sentences
+- Focus on plot-relevant actions/statements
+
+**What NOT to extract:**
+- Pure atmosphere descriptions with no plot impact
+- Filler dialogue ("Hello", "Goodbye", small talk)
+- Repeated descriptions of existing state
+
+Target: Extract 5-15 beats from the continuation.
+
+### Step 2: Determine World State Changes
+
+For EACH beat, identify which **world state dimensions** it changes:
+
+| Dimension | Definition | Examples |
+|-----------|------------|----------|
+| **Location** | Physical position changes | Character moves rooms, travels, enters/exits |
+| **Knowledge** | Information state changes | Discovery, revelation, learning, witnessing |
+| **Relationship** | Character dynamics change | Trust broken, alliance formed, hostility increased |
+| **Goal** | Character objectives change | New goal adopted, goal abandoned, priority shift |
+| **Resource** | Possession/ownership changes | Weapon taken, money lost, key obtained |
+| **Risk** | Threat/conflict intensity changes | Danger increases, situation worsens, time pressure |
+
+**Mark TRUE (1) or FALSE (0) for each dimension.**
+
+### Step 3: Classify Each Beat
+
+Based on world state changes, categorize each beat:
+
+- **DRIVER**: At least ONE dimension changed (state_changes ≥ 1)
+  - Advances the plot
+  - Creates new information or situations
+  - Moves the story forward
+  - Example: "John finds a hidden key" → Knowledge + Resource change
+
+- **STATIC**: NO dimensions changed (state_changes = 0)
+  - Describes atmosphere or mood
+  - Character gestures without plot impact
+  - Scene-setting without new information
+  - Example: "The wind howls outside" → Pure atmosphere
+
+- **REDUNDANT**: NO new change, but REPEATS known information
+  - Restates facts already established in context
+  - Describes states we already know
+  - Adds no new information
+  - Example: Context says "John is wounded" → Continuation says "John's wound throbs" with no new development
+
+**Decision Tree:**
+```
+Does this beat change any world state?
+├─ YES → DRIVER (count which dimensions)
+└─ NO → Does it repeat known information?
+    ├─ YES → REDUNDANT
+    └─ NO → STATIC
+```
+
+## Output Format
+
+Provide your analysis as a valid JSON object with NO additional text:
+
+```json
+{
+  "script_id": "script_XXXX",
+  "model": "model-name",
+  "beats": [
+    {
+      "beat_id": 1,
+      "source_type": "ACTION|DIALOGUE",
+      "content": "Brief description or exact quote of the beat",
+      "evidence": "Exact text from continuation",
+      "state_changes": {
+        "location": 0,
+        "knowledge": 1,
+        "relationship": 0,
+        "goal": 0,
+        "resource": 0,
+        "risk": 1
+      },
+      "total_changes": 2,
+      "classification": "DRIVER|STATIC|REDUNDANT",
+      "reasoning": "One-sentence explanation",
+      "confidence": 0.92
+    }
+  ]
+}
+```
+
+## Field Requirements
+
+- **script_id**: Copy from input
+- **model**: Copy from input
+- **beat_id**: Sequential number (1, 2, 3...)
+- **source_type**: Must be exactly "ACTION" or "DIALOGUE"
+- **content**: Brief description (< 20 words) or exact short quote
+- **evidence**: Direct quote from continuation showing this beat
+- **state_changes**: Object with 6 boolean fields (0 or 1)
+  - location: 1 if position changed, else 0
+  - knowledge: 1 if information changed, else 0
+  - relationship: 1 if character dynamics changed, else 0
+  - goal: 1 if objectives changed, else 0
+  - resource: 1 if possessions changed, else 0
+  - risk: 1 if threat level changed, else 0
+- **total_changes**: Sum of state_changes (0 to 6)
+- **classification**: Must be exactly one of: DRIVER, STATIC, REDUNDANT
+- **reasoning**: One-sentence explanation of classification (< 30 words)
+- **confidence**: Float 0.0-1.0 indicating your certainty
+  - 0.9-1.0: Very clear (obvious state change or lack thereof)
+  - 0.7-0.9: Confident (good evidence)
+  - 0.5-0.7: Moderate (some interpretation needed)
+  - 0.0-0.5: Uncertain (ambiguous case)
+
+## Classification Logic Rules
+
+**DRIVER requires:**
+- total_changes ≥ 1
+- At least one state_changes field = 1
+- Clear evidence of plot advancement
+
+**STATIC requires:**
+- total_changes = 0
+- Does NOT repeat information from context
+- Purely descriptive or atmospheric
+
+**REDUNDANT requires:**
+- total_changes = 0
+- DOES repeat information already in context
+- Adds no new narrative value
+
+## Quality Guidelines
+
+**Good Practice:**
+- Extract 5-15 substantive beats (not every sentence)
+- Be consistent in judging state changes
+- Use exact quotes in evidence field
+- Focus on plot-relevant beats
+- Consider cumulative impact (multiple small beats = one driver)
+
+**Avoid:**
+- Extracting too granularly (every gesture)
+- Missing event-type dialogue beats
+- Confusing style/tone with narrative efficiency
+- Being too strict (penalizing valid scene-setting) or too lenient (calling everything a driver)
+
+**Edge Cases:**
+- **Character expressions revealing internal state**: If it's NEW information about emotion/intention → Knowledge change
+- **Failed actions**: Still count as driver if they reveal new information (e.g., "tries door, locked" → Knowledge)
+- **Parallel actions**: If they set up future conflicts → Risk change
+- **Implicit state changes**: Count them if clearly implied (e.g., "grabs gun" → Resource change even if not explicitly stated)
+
+## Examples
+
+### Example 1: DRIVER Beat (Knowledge + Risk)
+
+**Beat**: Character discovers hidden evidence revealing betrayal
+
+**Evidence**: "Sarah opens the drawer and finds photos of John meeting with her enemies. Her hands tremble."
+
+```json
+{
+  "beat_id": 1,
+  "source_type": "ACTION",
+  "content": "Sarah discovers evidence of John's betrayal",
+  "evidence": "Sarah opens the drawer and finds photos of John meeting with her enemies.",
+  "state_changes": {
+    "location": 0,
+    "knowledge": 1,
+    "relationship": 0,
+    "goal": 0,
+    "resource": 0,
+    "risk": 1
+  },
+  "total_changes": 2,
+  "classification": "DRIVER",
+  "reasoning": "New information discovered that increases conflict and changes situation",
+  "confidence": 0.95
+}
+```
+
+### Example 2: DRIVER Beat (Relationship + Goal)
+
+**Beat**: Character makes a threat that changes dynamics
+
+**Evidence**: "If you don't sign those papers by noon, I'll make sure your daughter never sees daylight again."
+
+```json
+{
+  "beat_id": 2,
+  "source_type": "DIALOGUE",
+  "content": "Villain threatens protagonist's daughter",
+  "evidence": "If you don't sign those papers by noon, I'll make sure your daughter never sees daylight again.",
+  "state_changes": {
+    "location": 0,
+    "knowledge": 0,
+    "relationship": 1,
+    "goal": 1,
+    "resource": 0,
+    "risk": 1
+  },
+  "total_changes": 3,
+  "classification": "DRIVER",
+  "reasoning": "Threat creates deadline, escalates conflict, and shifts character's goal",
+  "confidence": 0.98
+}
+```
+
+### Example 3: STATIC Beat (Atmosphere)
+
+**Beat**: Pure atmospheric description with no plot impact
+
+**Evidence**: "The autumn wind rustles through the trees outside. Shadows dance on the wall."
+
+```json
+{
+  "beat_id": 3,
+  "source_type": "ACTION",
+  "content": "Wind and shadows create atmosphere",
+  "evidence": "The autumn wind rustles through the trees outside. Shadows dance on the wall.",
+  "state_changes": {
+    "location": 0,
+    "knowledge": 0,
+    "relationship": 0,
+    "goal": 0,
+    "resource": 0,
+    "risk": 0
+  },
+  "total_changes": 0,
+  "classification": "STATIC",
+  "reasoning": "Scene-setting description with no narrative advancement",
+  "confidence": 0.90
+}
+```
+
+### Example 4: REDUNDANT Beat (Repeating Known Info)
+
+**Context**: "John has a bullet wound in his shoulder. He's been bleeding for hours."
+**Beat**: "John grimaces at the pain in his wounded shoulder."
+
+```json
+{
+  "beat_id": 4,
+  "source_type": "ACTION",
+  "content": "John reacts to his shoulder wound",
+  "evidence": "John grimaces at the pain in his wounded shoulder.",
+  "state_changes": {
+    "location": 0,
+    "knowledge": 0,
+    "relationship": 0,
+    "goal": 0,
+    "resource": 0,
+    "risk": 0
+  },
+  "total_changes": 0,
+  "classification": "REDUNDANT",
+  "reasoning": "Restates existing wound information without new development",
+  "confidence": 0.88
+}
+```
+
+### Example 5: DRIVER Beat (Location + Knowledge)
+
+**Beat**: Character moves to new location and observes key detail
+
+**Evidence**: "Marcus steps into the vault. The safe is already open, empty."
+
+```json
+{
+  "beat_id": 5,
+  "source_type": "ACTION",
+  "content": "Marcus enters vault and finds safe empty",
+  "evidence": "Marcus steps into the vault. The safe is already open, empty.",
+  "state_changes": {
+    "location": 1,
+    "knowledge": 1,
+    "relationship": 0,
+    "goal": 0,
+    "resource": 0,
+    "risk": 0
+  },
+  "total_changes": 2,
+  "classification": "DRIVER",
+  "reasoning": "Position change plus discovery of critical missing item",
+  "confidence": 0.94
+}
+```
+
+---
+
+## Your Task
+
+Analyze the following script continuation for narrative efficiency:
+
+```
+**CONTEXT:**
+{CONTEXT}
+```
+
+```
+**GENERATED CONTINUATION:**
+{CONTINUATION}
+```
+
+**MODEL:** {MODEL}
+
+**SCRIPT ID:** {SCRIPT_ID}
+
+**Instructions:**
+1. Extract 5-15 story beats from the continuation
+2. For each beat, mark which world state dimensions changed (0 or 1)
+3. Calculate total_changes (sum of state_changes)
+4. Classify as DRIVER (≥1 change), STATIC (0 changes, not redundant), or REDUNDANT (0 changes, repeats context)
+5. Provide confidence score for each classification
+
+Provide your complete analysis in the JSON format specified above.

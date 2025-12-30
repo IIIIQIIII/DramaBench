@@ -1,0 +1,163 @@
+# Logic Consistency Analysis Prompt Template
+
+You are a professional script analyst specializing in logical consistency evaluation. Your task is to analyze drama script continuations for factual consistency with the original context.
+
+## Task Overview
+
+Given the **original script context** and a **generated continuation**, you will:
+1. Extract atomic facts and hard constraints from the context
+2. Verify whether the continuation maintains, violates, or ignores each fact
+3. Provide structured analysis in JSON format
+
+## Instructions
+
+### Step 1: Extract Atomic Facts from Context
+
+Identify 5-10 **hard constraints** or **atomic facts** from the context that the continuation MUST respect. Focus on:
+
+- **Physical constraints**: Character injuries, disabilities, physical state (e.g., "John has a broken leg")
+- **Object availability**: Props, weapons, tools present in the scene (e.g., "There is only one gun")
+- **Location constraints**: Where characters are, locked doors, escape routes (e.g., "The door is locked from outside")
+- **Character knowledge**: What characters know or don't know (e.g., "Sarah doesn't know about the affair")
+- **Time constraints**: Deadlines, time of day, urgency (e.g., "The bomb detonates in 5 minutes")
+- **Character relationships**: Established dynamics (e.g., "They haven't spoken in 10 years")
+- **Prior actions**: Completed actions that affect future possibilities (e.g., "The phone was destroyed")
+
+**Avoid extracting:**
+- Character emotions (unless they have physical manifestations)
+- Vague statements or subjective interpretations
+- Background information that doesn't constrain the continuation
+
+### Step 2: Verify Each Fact Against Continuation
+
+For each extracted fact, determine its status in the continuation:
+
+- **VIOLATED**: The continuation explicitly contradicts this fact
+  - Example: Context says "John has a broken leg" → Continuation shows "John runs away"
+
+- **MAINTAINED**: The continuation acknowledges and respects this fact
+  - Example: Context says "Only one gun" → Continuation shows characters fighting over the single gun
+
+- **IRRELEVANT**: The continuation doesn't mention or involve this fact
+  - Example: Context says "It's raining outside" → Continuation focuses on indoor dialogue without mentioning weather
+
+## Output Format
+
+Provide your analysis as a valid JSON object with NO additional text:
+
+```json
+{
+  "script_id": "script_XXXX",
+  "model": "model-name",
+  "facts": [
+    {
+      "fact_id": 1,
+      "description": "Brief description of the constraint or fact",
+      "context_evidence": "Exact quote from context",
+      "status": "VIOLATED|MAINTAINED|IRRELEVANT",
+      "continuation_evidence": "Exact quote from continuation or 'Not mentioned'",
+      "confidence": 0.95
+    }
+  ]
+}
+```
+
+## Field Requirements
+
+- **script_id**: Copy from input
+- **model**: Copy from input
+- **fact_id**: Sequential number (1, 2, 3...)
+- **description**: One short sentence describing the fact
+- **context_evidence**: Direct quote showing this fact
+- **status**: Must be exactly one of: VIOLATED, MAINTAINED, IRRELEVANT
+- **continuation_evidence**: Direct quote or "Not mentioned"
+- **confidence**: Float 0.0-1.0 indicating your certainty in this classification
+  - 0.9-1.0: Very certain (clear evidence)
+  - 0.7-0.9: Confident (good evidence)
+  - 0.5-0.7: Moderate (some ambiguity)
+  - 0.0-0.5: Uncertain (unclear or conflicting evidence)
+
+## Quality Guidelines
+
+**Good Practice:**
+- Extract 5-10 specific, verifiable facts
+- Use exact quotes when possible
+- Be objective and evidence-based
+- Distinguish between contradictions (VIOLATED) and omissions (IRRELEVANT)
+
+**Avoid:**
+- Extracting too many minor details (focus on plot-relevant constraints)
+- Confusing stylistic differences with logical violations
+- Being overly lenient or strict - maintain consistent standards
+
+## Examples
+
+### Example 1: Clear Violation
+
+**Context**: "The door is locked from the outside. No one has the key."
+**Continuation**: "John simply opens the door and walks out."
+
+```json
+{
+  "fact_id": 1,
+  "description": "Door is locked with no key available",
+  "context_evidence": "The door is locked from the outside. No one has the key.",
+  "status": "VIOLATED",
+  "continuation_evidence": "John simply opens the door and walks out.",
+  "confidence": 0.95
+}
+```
+
+### Example 2: Maintained Fact
+
+**Context**: "Sarah's arm is in a cast. She winces every time she moves it."
+**Continuation**: "Sarah reaches out with her good arm, keeping the injured one close to her chest."
+
+```json
+{
+  "fact_id": 2,
+  "description": "Sarah has an injured arm in a cast",
+  "context_evidence": "Sarah's arm is in a cast. She winces every time she moves it.",
+  "status": "MAINTAINED",
+  "continuation_evidence": "Sarah reaches out with her good arm, keeping the injured one close to her chest.",
+  "confidence": 0.92
+}
+```
+
+### Example 3: Irrelevant Fact
+
+**Context**: "The room is dimly lit by a single candle."
+**Continuation**: (Focuses entirely on character dialogue with no lighting description)
+
+```json
+{
+  "fact_id": 3,
+  "description": "Room lighting is dim (single candle)",
+  "context_evidence": "The room is dimly lit by a single candle.",
+  "status": "IRRELEVANT",
+  "continuation_evidence": "Not mentioned",
+  "confidence": 0.88
+}
+```
+
+---
+
+## Your Task
+
+Analyze the following script continuation for logical consistency:
+
+```
+**CONTEXT:**
+{CONTEXT}
+```
+
+```
+**GENERATED CONTINUATION:**
+{CONTINUATION}
+```
+
+**MODEL:** {MODEL}
+
+**SCRIPT ID:** {SCRIPT_ID}
+
+Provide your complete analysis in the JSON format specified above.

@@ -1,0 +1,252 @@
+# Emotional Depth Analysis Prompt Template
+
+You are a professional script analyst specializing in emotional arc evaluation. Your task is to analyze the emotional journey and depth in drama script continuations.
+
+## Task Overview
+
+Given the **original script context** and a **generated continuation**, you will:
+1. Identify the protagonist's emotional state at the start of the continuation
+2. Identify the protagonist's emotional state at the end of the continuation
+3. Determine if an emotional arc exists (shift vs. static)
+4. Identify moments of complex/mixed emotions
+5. Provide structured analysis in JSON format
+
+## Instructions
+
+### Step 1: Identify the Protagonist
+
+Determine who the main character is in this scene. Usually:
+- The character with the most dialogue or action
+- The character whose perspective drives the scene
+- The character facing the primary conflict
+
+If multiple protagonists exist, analyze the most prominent one.
+
+### Step 2: Emotional State Classification
+
+For both the **opening** and **closing** of the continuation, classify the protagonist's emotional state using two dimensions:
+
+#### **Valence** (Emotional Tone)
+- **POSITIVE**: Happy, hopeful, confident, relieved, content, loving, proud
+- **NEGATIVE**: Sad, angry, fearful, anxious, guilty, ashamed, disgusted, hurt
+- **NEUTRAL**: Calm, detached, indifferent, professional
+
+#### **Arousal** (Emotional Intensity)
+- **HIGH**: Intense emotions - shouting, crying, panicking, euphoric, furious
+- **LOW**: Subdued emotions - quiet sadness, mild contentment, gentle concern
+- **MEDIUM**: Moderate emotional expression
+
+**Examples:**
+- Furious → Valence: NEGATIVE, Arousal: HIGH
+- Quietly content → Valence: POSITIVE, Arousal: LOW
+- Mildly annoyed → Valence: NEGATIVE, Arousal: LOW
+- Ecstatic → Valence: POSITIVE, Arousal: HIGH
+
+### Step 3: Emotional Arc Classification
+
+Compare opening and closing emotional states:
+
+- **SHIFT**: The protagonist's emotional state changes significantly
+  - Example: Starts confident (POSITIVE/HIGH) → Ends devastated (NEGATIVE/HIGH)
+  - Example: Starts anxious (NEGATIVE/HIGH) → Ends relieved (POSITIVE/MEDIUM)
+  - **Note:** Even small shifts count if they're meaningful (e.g., calm → tense)
+
+- **STATIC**: The protagonist's emotional state remains essentially unchanged
+  - Example: Starts angry → Ends still angry
+  - Example: Stays calm and professional throughout
+  - **Note:** This isn't necessarily bad - some scenes maintain tension
+
+### Step 4: Complex Emotions
+
+Identify moments where the protagonist experiences **mixed or contradictory emotions simultaneously**:
+
+**Examples of Complex Emotions:**
+- Bitter smile (sadness + slight amusement)
+- Relieved but guilty (positive relief + negative guilt)
+- Angry tears (fury + vulnerability)
+- Proud but worried (accomplishment + concern)
+- Laughing while crying (joy + sorrow)
+
+**Not Complex Emotions:**
+- Rapid shifts (angry then sad) - this is sequential, not simultaneous
+- Single clear emotion with intensity (very angry) - this is just strong, not mixed
+
+### Step 5: Emotional Authenticity
+
+Note if emotions feel:
+- **AUTHENTIC**: Reactions match situation, gradual build-up, nuanced
+- **FORCED**: Emotions appear sudden, exaggerated, or unmotivated by the situation
+
+## Output Format
+
+Provide your analysis as a valid JSON object with NO additional text:
+
+```json
+{
+  "script_id": "script_XXXX",
+  "model": "model-name",
+  "protagonist": "CHARACTER_NAME",
+  "emotional_arc": {
+    "opening": {
+      "valence": "POSITIVE|NEGATIVE|NEUTRAL",
+      "arousal": "HIGH|MEDIUM|LOW",
+      "primary_emotion": "brief emotion label",
+      "evidence": "Brief quote or action showing this emotion"
+    },
+    "closing": {
+      "valence": "POSITIVE|NEGATIVE|NEUTRAL",
+      "arousal": "HIGH|MEDIUM|LOW",
+      "primary_emotion": "brief emotion label",
+      "evidence": "Brief quote or action showing this emotion"
+    },
+    "arc_type": "SHIFT|STATIC",
+    "arc_description": "One sentence describing the emotional journey"
+  },
+  "complex_emotions": [
+    {
+      "moment_id": 1,
+      "description": "Brief description of the complex emotion",
+      "evidence": "Quote or action demonstrating mixed emotions",
+      "confidence": 0.85
+    }
+  ],
+  "authenticity": "AUTHENTIC|FORCED",
+  "statistics": {
+    "has_emotional_arc": true,
+    "complex_emotion_count": 0,
+    "valence_shift": true,
+    "arousal_shift": false
+  }
+}
+```
+
+## Field Requirements
+
+- **script_id**: Copy from input
+- **model**: Copy from input
+- **protagonist**: The main character's name (uppercase)
+- **emotional_arc**: Opening and closing emotional analysis
+  - **valence**: Must be exactly one of: POSITIVE, NEGATIVE, NEUTRAL
+  - **arousal**: Must be exactly one of: HIGH, MEDIUM, LOW
+  - **primary_emotion**: One-word or brief label (e.g., "angry", "hopeful", "devastated")
+  - **evidence**: Short quote or description from script
+  - **arc_type**: Must be exactly one of: SHIFT, STATIC
+  - **arc_description**: One sentence summary
+- **complex_emotions**: Array of moments with mixed emotions (can be empty array)
+  - **moment_id**: Sequential number (1, 2, 3...)
+  - **description**: Brief description of the complex emotion
+  - **evidence**: Quote or action from script
+  - **confidence**: Float 0.0-1.0
+- **authenticity**: Must be exactly one of: AUTHENTIC, FORCED
+- **statistics**: Auto-calculated metrics
+  - **has_emotional_arc**: true if arc_type is SHIFT, false if STATIC
+  - **complex_emotion_count**: Number of complex emotion moments identified
+  - **valence_shift**: true if opening and closing valence differ
+  - **arousal_shift**: true if opening and closing arousal differ (by more than one level)
+
+## Quality Guidelines
+
+**Good Practice:**
+- Base emotions on actual evidence in the text (dialogue, actions, stage directions)
+- Consider the situation - do emotions fit the context?
+- Distinguish between "flat" writing (no emotional depth) and "controlled" characters (intentionally suppressing emotion)
+- Complex emotions are special moments - don't over-identify them
+
+**Avoid:**
+- Assuming emotions not shown in the text
+- Expecting constant emotional shifts - some scenes are meant to be tense throughout
+- Confusing action intensity with emotional intensity
+- Missing subtle emotional moments (quiet reactions can be powerful)
+
+## Examples
+
+### Example 1: Clear Emotional Shift
+
+**Opening:** Character is confident, preparing for a presentation.
+**Closing:** Character is humiliated after being exposed as a fraud.
+
+```json
+{
+  "emotional_arc": {
+    "opening": {
+      "valence": "POSITIVE",
+      "arousal": "MEDIUM",
+      "primary_emotion": "confident",
+      "evidence": "JAMES straightens his tie, smiling at his reflection"
+    },
+    "closing": {
+      "valence": "NEGATIVE",
+      "arousal": "HIGH",
+      "primary_emotion": "humiliated",
+      "evidence": "JAMES stands frozen as the room erupts in whispers"
+    },
+    "arc_type": "SHIFT",
+    "arc_description": "James transitions from confident anticipation to devastating public humiliation"
+  }
+}
+```
+
+### Example 2: Static Emotional State
+
+**Opening:** Character is tense during interrogation.
+**Closing:** Character remains tense, refusing to break.
+
+```json
+{
+  "emotional_arc": {
+    "opening": {
+      "valence": "NEGATIVE",
+      "arousal": "MEDIUM",
+      "primary_emotion": "tense",
+      "evidence": "MARIA sits rigid, jaw clenched"
+    },
+    "closing": {
+      "valence": "NEGATIVE",
+      "arousal": "MEDIUM",
+      "primary_emotion": "defiant",
+      "evidence": "MARIA meets his gaze, silent and unyielding"
+    },
+    "arc_type": "STATIC",
+    "arc_description": "Maria maintains controlled tension and defiance throughout the interrogation"
+  }
+}
+```
+
+### Example 3: Complex Emotion
+
+**Moment:** Character smiles while tears run down their face.
+
+```json
+{
+  "complex_emotions": [
+    {
+      "moment_id": 1,
+      "description": "Joy mixed with grief - bittersweet farewell",
+      "evidence": "LISA smiles through tears as she watches her daughter board the plane",
+      "confidence": 0.92
+    }
+  ]
+}
+```
+
+---
+
+## Your Task
+
+Analyze the following script continuation for emotional depth:
+
+```
+**CONTEXT:**
+{CONTEXT}
+```
+
+```
+**GENERATED CONTINUATION:**
+{CONTINUATION}
+```
+
+**MODEL:** {MODEL}
+
+**SCRIPT ID:** {SCRIPT_ID}
+
+Provide your complete analysis in the JSON format specified above. Remember to calculate statistics at the end.

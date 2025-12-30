@@ -1,0 +1,235 @@
+# Dialogue Quality Analysis Prompt Template
+
+You are a professional script analyst specializing in dialogue quality evaluation. Your task is to analyze the dramatic function and effectiveness of dialogue in drama script continuations.
+
+## Task Overview
+
+Given a **generated continuation**, you will:
+1. Extract all dialogue lines
+2. Classify each line by its dramatic function
+3. Provide structured analysis in JSON format
+
+## Instructions
+
+### Dialogue Classification System
+
+Classify each dialogue line into ONE of these categories:
+
+#### **SUBTEXT** - Dialogue with Hidden Meaning
+Lines where the character says one thing but means another, or where there's layered meaning:
+- Implications, hints, veiled threats
+- Sarcasm, irony, double meanings
+- Emotional subtext (saying "I'm fine" when clearly not)
+- Strategic deflection or manipulation
+- Loaded questions
+
+**Examples:**
+- "That's an interesting choice of words." (implying suspicion)
+- "I'm sure you did your best." (implying disappointment)
+- "Funny how you're always busy when I need you." (implying neglect)
+
+#### **CONFLICT** - Confrontational Dialogue
+Lines that create or escalate tension between characters:
+- Direct arguments, accusations, insults
+- Challenges, threats, ultimatums
+- Defensive responses, denials
+- Power struggles, interrogation
+- Emotional outbursts driven by conflict
+
+**Examples:**
+- "You're lying to me!"
+- "What gives you the right to judge me?"
+- "If you do that, we're done."
+
+#### **EXPOSITION** - Information Delivery
+Lines that primarily explain background, facts, or situation:
+- "As you know..." statements
+- Explaining plot points directly
+- Backstory dumps
+- Obvious statements of what's happening
+- Tutorial-like explanations
+
+**Examples:**
+- "As you know, the company has been struggling for months."
+- "That's the gun that killed your father."
+- "We've been friends since childhood, remember?"
+
+**Note:** Well-integrated exposition (natural revelations through conversation) can overlap with other categories. Use this label when explanation is the PRIMARY function.
+
+#### **FILLER** - Functional/Mundane Dialogue
+Lines with minimal dramatic content:
+- Greetings, goodbyes, pleasantries
+- Yes/no answers, acknowledgments ("Okay," "Sure," "What?")
+- Simple questions with no subtext ("Where is it?")
+- Logistical coordination ("Let's go," "Wait here")
+
+**Examples:**
+- "Hello." / "Goodbye."
+- "Okay."
+- "Come in."
+
+**Note:** Filler isn't necessarily bad - it can provide pacing and realism. It's only problematic if overused.
+
+### Classification Guidelines
+
+**Priority Rules:**
+1. If a line has BOTH conflict AND subtext, choose **CONFLICT** (conflict takes priority)
+2. If a line is exposition BUT delivered during conflict, choose **CONFLICT**
+3. If a simple greeting has subtext (e.g., sarcastic "Oh, hello"), choose **SUBTEXT**
+4. When unsure between SUBTEXT and FILLER, ask: "Does this reveal character or advance relationships?" If yes → SUBTEXT, if no → FILLER
+
+**Edge Cases:**
+- Rhetorical questions with implied accusations → **CONFLICT**
+- Questions designed to manipulate → **SUBTEXT**
+- Questions that are just functional → **FILLER**
+- Character explaining their feelings honestly → **EXPOSITION** (not subtext, despite being emotional)
+
+## Output Format
+
+Provide your analysis as a valid JSON object with NO additional text:
+
+```json
+{
+  "script_id": "script_XXXX",
+  "model": "model-name",
+  "dialogue_analysis": [
+    {
+      "line_id": 1,
+      "character_name": "CHARACTER_NAME",
+      "dialogue": "Exact dialogue text",
+      "classification": "SUBTEXT|CONFLICT|EXPOSITION|FILLER",
+      "confidence": 0.90
+    }
+  ],
+  "statistics": {
+    "total_dialogues": 0,
+    "subtext": 0,
+    "conflict": 0,
+    "exposition": 0,
+    "filler": 0,
+    "subtext_density": 0.0,
+    "exposition_rate": 0.0
+  }
+}
+```
+
+## Field Requirements
+
+- **script_id**: Copy from input
+- **model**: Copy from input
+- **dialogue_analysis**: Array of all dialogue lines in continuation
+  - **line_id**: Sequential number (1, 2, 3...)
+  - **character_name**: Who speaks this line (uppercase)
+  - **dialogue**: Exact text of the dialogue
+  - **classification**: Must be exactly one of: SUBTEXT, CONFLICT, EXPOSITION, FILLER
+  - **confidence**: Float 0.0-1.0 indicating certainty
+    - 0.9-1.0: Very certain (clear category match)
+    - 0.7-0.9: Confident (fits category well)
+    - 0.5-0.7: Moderate (some ambiguity, but best fit)
+- **statistics**: Auto-calculated metrics
+  - **total_dialogues**: Total number of dialogue lines analyzed
+  - **subtext**: Count of SUBTEXT lines
+  - **conflict**: Count of CONFLICT lines
+  - **exposition**: Count of EXPOSITION lines
+  - **filler**: Count of FILLER lines
+  - **subtext_density**: (subtext + conflict) / total_dialogues (decimal)
+  - **exposition_rate**: exposition / total_dialogues (decimal)
+
+**Note:** Higher subtext_density indicates more dramatic tension. Higher exposition_rate indicates more "on-the-nose" writing.
+
+## Quality Guidelines
+
+**Good Practice:**
+- Focus on the PRIMARY function of the line
+- Consider the dramatic context
+- Be consistent across the entire continuation
+- Recognize that good scripts need variety - not everything should be subtext
+
+**Avoid:**
+- Over-analyzing simple functional dialogue
+- Expecting every line to be deep - some scenes need filler
+- Confusing honest emotion with subtext
+- Being inconsistent with classification standards
+
+## Examples
+
+### Example 1: Subtext
+
+**Dialogue:** "I'm sure you had your reasons for not calling."
+
+```json
+{
+  "line_id": 1,
+  "character_name": "EMMA",
+  "dialogue": "I'm sure you had your reasons for not calling.",
+  "classification": "SUBTEXT",
+  "confidence": 0.93
+}
+```
+
+**Reasoning:** Superficially understanding, but implies hurt and accusation.
+
+### Example 2: Conflict
+
+**Dialogue:** "Don't you dare walk away from me!"
+
+```json
+{
+  "line_id": 2,
+  "character_name": "MICHAEL",
+  "dialogue": "Don't you dare walk away from me!",
+  "classification": "CONFLICT",
+  "confidence": 0.98
+}
+```
+
+**Reasoning:** Direct confrontation, escalating tension.
+
+### Example 3: Exposition
+
+**Dialogue:** "Your father and I built this company from nothing thirty years ago."
+
+```json
+{
+  "line_id": 3,
+  "character_name": "MRS. CHEN",
+  "dialogue": "Your father and I built this company from nothing thirty years ago.",
+  "classification": "EXPOSITION",
+  "confidence": 0.88
+}
+```
+
+**Reasoning:** Primarily delivering backstory information.
+
+### Example 4: Filler
+
+**Dialogue:** "Come in."
+
+```json
+{
+  "line_id": 4,
+  "character_name": "DANIEL",
+  "dialogue": "Come in.",
+  "classification": "FILLER",
+  "confidence": 0.95
+}
+```
+
+**Reasoning:** Functional dialogue with no dramatic weight.
+
+---
+
+## Your Task
+
+Analyze the following script continuation for dialogue quality:
+
+```
+**GENERATED CONTINUATION:**
+{CONTINUATION}
+```
+
+**MODEL:** {MODEL}
+
+**SCRIPT ID:** {SCRIPT_ID}
+
+Provide your complete analysis in the JSON format specified above. Remember to calculate statistics at the end.

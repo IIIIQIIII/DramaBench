@@ -1,0 +1,190 @@
+# Character Consistency Analysis Prompt Template
+
+You are a professional script analyst specializing in character consistency evaluation. Your task is to analyze whether characters in drama script continuations maintain their established personalities and voices.
+
+## Task Overview
+
+Given the **original script context** and a **generated continuation**, you will:
+1. Extract character personas from the context
+2. Analyze each dialogue line in the continuation
+3. Classify dialogue consistency (In_Character, Neutral, OOC)
+4. Provide structured analysis in JSON format
+
+## Instructions
+
+### Step 1: Extract Character Personas from Context
+
+For each character with dialogue in the context, create a brief persona profile including:
+
+- **Personality traits**: Key characteristics (e.g., arrogant, timid, aggressive, gentle)
+- **Speech patterns**: How they talk (e.g., formal, casual, uses slang, verbose, terse)
+- **Signature phrases**: Catchphrases or repeated expressions
+- **Emotional baseline**: Default emotional state (e.g., anxious, confident, angry)
+- **Relationship dynamics**: How they interact with other characters
+
+**Keep profiles concise** (2-3 sentences per character).
+
+### Step 2: Analyze Dialogue Lines in Continuation
+
+For each dialogue line in the continuation, classify it as:
+
+- **IN_CHARACTER**: The dialogue clearly matches the established persona
+  - Example: A previously arrogant character continues to speak condescendingly
+  - Example: Character maintains their established speech patterns and vocabulary
+
+- **NEUTRAL**: Generic dialogue that could fit any character
+  - Example: "Okay." / "Let's go." / "What happened?"
+  - These don't violate character but don't showcase personality either
+
+- **OOC** (Out Of Character): The dialogue contradicts the established persona
+  - Example: A consistently rude character suddenly speaks politely without narrative justification
+  - Example: A timid character acts boldly without any character development shown
+  - Example: A character's vocabulary level suddenly changes (formal → street slang or vice versa)
+
+**Important**: Minor variations are acceptable. Only mark as OOC if there's a **clear contradiction** without proper setup or justification.
+
+### Step 3: Character Actions (Optional Check)
+
+If a character performs actions that contradict their established state, note it:
+- A coward suddenly acting brave without buildup
+- A previously calm character exploding without trigger
+- Physical impossibilities (e.g., injured character acts uninjured)
+
+## Output Format
+
+Provide your analysis as a valid JSON object with NO additional text:
+
+```json
+{
+  "script_id": "script_XXXX",
+  "model": "model-name",
+  "personas": [
+    {
+      "character_name": "CHARACTER_NAME",
+      "persona_summary": "Brief 2-3 sentence summary of character traits and speech patterns"
+    }
+  ],
+  "dialogue_analysis": [
+    {
+      "line_id": 1,
+      "character_name": "CHARACTER_NAME",
+      "dialogue": "Exact dialogue text",
+      "classification": "IN_CHARACTER|NEUTRAL|OOC",
+      "confidence": 0.90
+    }
+  ],
+  "statistics": {
+    "total_dialogues": 0,
+    "in_character": 0,
+    "neutral": 0,
+    "ooc": 0,
+    "ooc_rate": 0.0
+  }
+}
+```
+
+## Field Requirements
+
+- **script_id**: Copy from input
+- **model**: Copy from input
+- **personas**: Array of character persona summaries
+  - **character_name**: Character's name (uppercase as in script)
+  - **persona_summary**: 2-3 sentence description
+- **dialogue_analysis**: Array of all dialogue lines in continuation
+  - **line_id**: Sequential number (1, 2, 3...)
+  - **character_name**: Who speaks this line
+  - **dialogue**: Exact text of the dialogue
+  - **classification**: Must be exactly one of: IN_CHARACTER, NEUTRAL, OOC
+  - **confidence**: Float 0.0-1.0 indicating certainty
+    - 0.9-1.0: Very certain (clear match or clear violation)
+    - 0.7-0.9: Confident (good evidence)
+    - 0.5-0.7: Moderate (some ambiguity)
+- **statistics**: Auto-calculated counts
+  - **total_dialogues**: Total number of dialogue lines analyzed
+  - **in_character**: Count of IN_CHARACTER classifications
+  - **neutral**: Count of NEUTRAL classifications
+  - **ooc**: Count of OOC classifications
+  - **ooc_rate**: ooc / total_dialogues (decimal)
+
+## Quality Guidelines
+
+**Good Practice:**
+- Base persona on actual dialogue and actions in context, not assumptions
+- Be consistent in your standards across all characters
+- Consider context: a character can grow/change if the story provides reason
+- Neutral is okay - not every line needs to showcase personality
+
+**Avoid:**
+- Being overly strict - minor variations are normal in human speech
+- Expecting every line to be dramatic - functional dialogue exists
+- Ignoring narrative justification - if the story explains the change, it's not OOC
+- Personal preferences - judge by internal consistency, not what you'd prefer
+
+## Examples
+
+### Example 1: Clear In-Character
+
+**Context Persona**: JOHN is arrogant, dismissive, speaks in short commands.
+**Continuation Dialogue**: "Move. I don't have time for this."
+
+```json
+{
+  "line_id": 1,
+  "character_name": "JOHN",
+  "dialogue": "Move. I don't have time for this.",
+  "classification": "IN_CHARACTER",
+  "confidence": 0.95
+}
+```
+
+### Example 2: Out of Character
+
+**Context Persona**: MARY is consistently timid, avoids confrontation, speaks hesitantly.
+**Continuation Dialogue**: "Get out of my face before I make you regret it!"
+
+```json
+{
+  "line_id": 2,
+  "character_name": "MARY",
+  "dialogue": "Get out of my face before I make you regret it!",
+  "classification": "OOC",
+  "confidence": 0.92
+}
+```
+
+### Example 3: Neutral
+
+**Context Persona**: SARAH is witty and sarcastic in most situations.
+**Continuation Dialogue**: "Hello."
+
+```json
+{
+  "line_id": 3,
+  "character_name": "SARAH",
+  "dialogue": "Hello.",
+  "classification": "NEUTRAL",
+  "confidence": 0.85
+}
+```
+
+---
+
+## Your Task
+
+Analyze the following script continuation for character consistency:
+
+```
+**CONTEXT:**
+{CONTEXT}
+```
+
+```
+**GENERATED CONTINUATION:**
+{CONTINUATION}
+```
+
+**MODEL:** {MODEL}
+
+**SCRIPT ID:** {SCRIPT_ID}
+
+Provide your complete analysis in the JSON format specified above. Remember to calculate statistics at the end.
