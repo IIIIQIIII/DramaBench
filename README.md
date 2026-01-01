@@ -126,7 +126,7 @@ An interactive, Apple-inspired web interface for exploring evaluation results an
 **Interactive Demo Features:**
 - ✨ Try script continuation with 4 SOTA models (GPT-5.2, Gemini 3, GLM-4.7, MiniMax M2.1)
 - 🔑 User-provided OpenRouter API key (stored locally)
-- 📜 100 drama scripts from DramaBench dataset
+- 📜 500 drama scripts from DramaBench dataset
 - 🎭 Official prompt template for generation
 - 📊 Compare AI-generated vs ground truth continuations
 - 🎨 Matching Apple-style design
@@ -145,8 +145,8 @@ An interactive, Apple-inspired web interface for exploring evaluation results an
 
 The DramaBench dataset is being released progressively to ensure quality and gather community feedback.
 
-**Current Release (v1.0):**
-- ✅ **100 Drama Scripts** - Available now on Hugging Face
+**Current Release (v2.0):**
+- ✅ **500 Drama Scripts** - Available now on Hugging Face
 - 📥 **Download**: [FutureMa/DramaBench](https://huggingface.co/datasets/FutureMa/DramaBench)
 - 📄 **Format**: JSONL with structured metadata
 - 🔓 **License**: MIT License
@@ -169,8 +169,8 @@ print(sample['continuation'])
 **Release Roadmap:**
 | Version | Samples | Status | Expected Release |
 |---------|---------|--------|------------------|
-| v1.0 | 100 | ✅ Available | 2025-12-23 |
-| v2.0 | 500 | 🔄 Coming Soon | Q1 2026 |
+| v1.0 | 100 | ✅ Released | 2025-12-23 |
+| **v2.0** | **500** | **✅ Available** | **2026-01-01** |
 | v3.0 (Full) | 1,103 | 📋 Planned | Q2 2026 |
 
 **Full Dataset Contents (v3.0):**
@@ -239,7 +239,7 @@ Visit [dramabench.pages.dev](https://dramabench.pages.dev) to explore:
 Experience drama script continuation with state-of-the-art language models:
 
 **Features:**
-- 🎭 **100 Drama Scripts** - Select from DramaBench v1.0 dataset
+- 🎭 **500 Drama Scripts** - Select from DramaBench v2.0 dataset
 - 🤖 **4 SOTA Models** - GPT-5.2, Gemini 3 Flash, GLM-4.7, MiniMax M2.1
 - 🔑 **Your API Key** - Uses OpenRouter API (bring your own key)
 - 📊 **Compare Results** - View AI-generated vs ground truth side-by-side
@@ -249,7 +249,7 @@ Experience drama script continuation with state-of-the-art language models:
 1. Get your free API key from [OpenRouter](https://openrouter.ai/keys)
 2. Visit the [demo page](https://dramabench.pages.dev/web/demo.html)
 3. Enter your API key (stored locally in your browser)
-4. Select a script from 100 options
+4. Select a script from 500 options
 5. Choose your preferred model
 6. Generate and compare continuations
 
@@ -307,7 +307,7 @@ This processes:
 
 **🤗 Hugging Face Dataset**: [FutureMa/DramaBench](https://huggingface.co/datasets/FutureMa/DramaBench)
 
-**Current Release: v1.0 (100 samples)** - Available Now!
+**Current Release: v2.0 (500 samples)** - Available Now!
 
 ### Quick Start
 
@@ -334,8 +334,8 @@ python scripts/load_dataset.py
 
 ### Dataset Overview
 
-**Current Release (v1.0 - 100 samples):**
-- 100 high-quality drama scripts with context-continuation pairs
+**Current Release (v2.0 - 500 samples):**
+- 500 high-quality drama scripts with context-continuation pairs
 - Average context length: ~1,601 characters (~400 tokens)
 - Average continuation length: ~1,600 characters (~400 tokens)
 - Split types: 73% scene boundary, 27% middle
@@ -345,8 +345,8 @@ python scripts/load_dataset.py
 **Release Roadmap:**
 | Version | Samples | Status | Release Date |
 |---------|---------|--------|--------------|
-| **v1.0** | **100** | **✅ Available** | **2025-12-23** |
-| v2.0 | 500 | 🔄 Coming Soon | Q1 2026 |
+| v1.0 | 100 | ✅ Released | 2025-12-23 |
+| **v2.0** | **500** | **✅ Available** | **2026-01-01** |
 | v3.0 (Full) | 1,103 | 📋 Planned | Q2 2026 |
 
 **Full Benchmark (v3.0 - Planned):**
@@ -506,7 +506,8 @@ DramaBench/
 │   │   ├── case_studies.json    # 24 case studies (262KB)
 │   │   ├── statistics.json      # Overall statistics (3KB)
 │   │   └── demo/                # Demo-specific data
-│   │       ├── dramabench_continuation_100.jsonl  # 100 scripts dataset
+│   │       ├── dramabench_continuation_500.jsonl  # 500 scripts dataset (v2.0)
+│   │       ├── dramabench_continuation_100.jsonl  # 100 scripts dataset (v1.0)
 │   │       └── drama_continuation_prompt_template.txt  # Official prompt
 │   └── scripts/
 │       ├── process_data.py      # Data processing script
